@@ -12,7 +12,6 @@
     <string name="categories">Categories</string>
     <string name="services">Services</string>
 
-
     <!--    App-specific -->
     <string name="request_service">Request Service</string>
     <string name="offer_sent">Offer sent</string>
