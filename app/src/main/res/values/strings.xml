@@ -59,8 +59,13 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="reset_password">Reset Password</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="create_account">Create Account</string>
 
     <!-- Messages -->
     <string name="welcome">Welcome</string>
@@ -83,6 +88,7 @@
     <string name="password_placeholder">Enter your password</string>
     <string name="first_name_placeholder">Enter your first name</string>
     <string name="last_name_placeholder">Enter your last name</string>
+    <string name="full_name_placeholder">Enter your full name</string>
     <string name="phone_placeholder">Enter your phone number</string>
     <string name="address_placeholder">Enter your address</string>
 
@@ -148,5 +154,10 @@
     <string name="onboarding_skip">Skip</string>
     <string name="onboarding_next">Next</string>
     <string name="onboarding_done">Done</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="TODO">TODO</string>
 
 </resources>

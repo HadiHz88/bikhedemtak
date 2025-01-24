@@ -1,19 +1,29 @@
 package lb.edu.ul.bikhedemtak.models;
 
+// Class representing a slide in the GetStartedActivity
 public class GetStartedSlide {
-    private int imageResId;
-    private String text;
+    // Fields
+    private final int imageResId;
+    private final String title;
+    private final String description;
 
-    public GetStartedSlide(int imageResId, String text) {
+    // Constructor
+    public GetStartedSlide(int imageResId, String title, String description) {
         this.imageResId = imageResId;
-        this.text = text;
+        this.title = title;
+        this.description = description;
     }
 
+    // Getters
     public int getImageResId() {
         return imageResId;
     }
 
     public String getText() {
-        return text;
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
