@@ -11,8 +11,12 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.android.material.appbar.MaterialToolbar;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.activities.AuthActivity;
 
 // Login Fragment
 public class LoginFragment extends Fragment {
@@ -37,6 +41,24 @@ public class LoginFragment extends Fragment {
         view.findViewById(R.id.btn_GoToRegister).setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_loginFragment_to_registerFragment);
+        });
+
+        // Access the toolbar from AuthActivity
+        MaterialToolbar toolbar = ((AuthActivity) requireActivity()).getToolBar();
+
+        // Set the title
+        toolbar.setTitle("Login");
+
+        // Add a skip button
+        toolbar.getMenu().clear(); // Clear any previous menu items
+        toolbar.inflateMenu(R.menu.menu_auth);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_skip) {
+                // Handle skip action
+                Toast.makeText(getContext(), "Skipped", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            return false;
         });
     }
 }

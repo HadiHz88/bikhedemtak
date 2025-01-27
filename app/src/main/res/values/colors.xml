@@ -12,4 +12,7 @@
     <!--    Other Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--    For Testing -->
+    <color name="red">#FFFF0000</color>
 </resources>

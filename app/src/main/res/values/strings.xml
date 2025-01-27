@@ -130,6 +130,9 @@
     <string name="paste">Paste</string>
     <string name="clear">Clear</string>
     <string name="refresh">Refresh</string>
+    <string name="policy_agreement">By signing up, you agree to our Terms of Service, and Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
     <!--    Notifications -->
     <string name="notif_new_message">You have a new message</string>

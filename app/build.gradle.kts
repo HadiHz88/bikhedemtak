@@ -35,7 +35,7 @@ dependencies {
     implementation(libs.dotsindicator)
     implementation (libs.viewpager2)
     implementation(libs.appcompat)
-    implementation(libs.material)
+    implementation("com.google.android.material:material:1.9.0")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
@@ -45,3 +45,4 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment:2.8.5")
     implementation("androidx.navigation:navigation-ui:2.7.3")
 }
+
