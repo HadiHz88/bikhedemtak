@@ -1,15 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
+    id("com.android.application")
 }
 
 android {
     namespace = "lb.edu.ul.bikhedemtak"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "lb.edu.ul.bikhedemtak"
-        minSdk = 35
-        targetSdk = 35
+        minSdk = 26
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -35,6 +35,7 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
