@@ -2,145 +2,183 @@ package lb.edu.ul.bikhedemtak.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
+import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
-import android.text.SpannableString;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.activities.AuthActivity;
 
-// Register Fragment
+/**
+ * Fragment handling user registration functionality.
+ * Provides registration interface with navigation to login, clickable policy links,
+ * and skip options. Includes styled text with clickable Terms of Service and Privacy Policy.
+ */
 public class RegisterFragment extends Fragment {
 
+    /**
+     * Required empty constructor for fragments.
+     * Do not perform any initialization here.
+     */
     public RegisterFragment() {
         // Required empty public constructor
     }
 
     @Override
-    // Inflate the layout for this fragment
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     @Override
-    // This method is called when the fragment's view has been created
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Set click listener for the "Go to Login" button
+        setupNavigation(view);
+        setupPolicyText(view);
+        setupToolbar();
+    }
+
+    /**
+     * Sets up navigation for the fragment, including the login button click handler
+     * @param view The root view of the fragment
+     */
+    private void setupNavigation(View view) {
         view.findViewById(R.id.btn_GoToLogin).setOnClickListener(v -> {
             NavController navController = Navigation.findNavController(v);
             navController.navigate(R.id.action_registerFragment_to_loginFragment);
         });
+    }
 
-
-        // Highlighting the words "Terms of Service" and "Privacy Policy"
-
-        // Find the TextView in your fragment's layout
+    /**
+     * Sets up the policy agreement text with clickable spans for Terms of Service
+     * and Privacy Policy
+     * @param view The root view of the fragment
+     */
+    private void setupPolicyText(View view) {
         TextView textView = view.findViewById(R.id.policy_agreement);
-        textView.setHighlightColor(Color.TRANSPARENT); // to prevent highlight
+        textView.setHighlightColor(Color.TRANSPARENT);
 
-        // Retrieve the full text from resources
         String fullText = getString(R.string.policy_agreement);
+        String termsText = getString(R.string.terms_of_service);
+        String privacyText = getString(R.string.privacy_policy);
 
-        // Retrieve the words to highlight from resources
-        String firstHighlight = getString(R.string.terms_of_service);
-        String secondHighlight = getString(R.string.privacy_policy);
+        SpannableString spannableString = getSpannableString(fullText, termsText, privacyText);
 
-        // Create a Spannable String
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    /**
+     * Creates a SpannableString with clickable and styled spans for Terms and Privacy Policy
+     * @param fullText The complete text string
+     * @param firstHighlight Terms of Service text to highlight
+     * @param secondHighlight Privacy Policy text to highlight
+     * @return Configured SpannableString with clickable spans
+     */
+    private SpannableString getSpannableString(String fullText, String firstHighlight, String secondHighlight) {
         SpannableString spannableString = new SpannableString(fullText);
 
-        // Find the start and end indices of the words to make clickable
         int startIndexFirst = fullText.indexOf(firstHighlight);
         int endIndexFirst = startIndexFirst + firstHighlight.length();
-
         int startIndexSecond = fullText.indexOf(secondHighlight);
         int endIndexSecond = startIndexSecond + secondHighlight.length();
 
-        // Set a ClickableSpan for "Terms of Service"
-        spannableString.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                // Show a dialog for Terms of Service
-                showDialog("Terms of Service", "Here are the Terms of Service details...");
-            }
+        // Configure Terms of Service span
+        spannableString.setSpan(createClickableSpan("Terms of Service"),
+                startIndexFirst,
+                endIndexFirst,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(getResources().getColor(R.color.soft_pink)); // Highlight color
-                ds.setUnderlineText(false); // Remove underline
-            }
-        }, startIndexFirst, endIndexFirst, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        // Configure Privacy Policy span
+        spannableString.setSpan(createClickableSpan("Privacy Policy"),
+                startIndexSecond,
+                endIndexSecond,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        // Set a ClickableSpan for "Privacy Policy"
-        spannableString.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(@NonNull View widget) {
-                // Show a dialog for Privacy Policy
-                showDialog("Privacy Policy", "Here are the Privacy Policy details...");
-            }
-
-            @Override
-            public void updateDrawState(@NonNull TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setColor(getResources().getColor(R.color.soft_pink)); // Highlight color
-                ds.setUnderlineText(false); // Remove underline
-            }
-        }, startIndexSecond, endIndexSecond, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        // Enable clickable text in the TextView
-        textView.setText(spannableString);
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-
-        // Access the toolbar from AuthActivity
-        MaterialToolbar toolbar = ((AuthActivity) requireActivity()).getToolBar();
-
-        // Set the title
-        toolbar.setTitle("Register");
-
-        // Add a skip button
-        toolbar.getMenu().clear(); // Clear any previous menu items
-        toolbar.inflateMenu(R.menu.menu_auth);
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_skip) {
-                // Handle skip action
-                Toast.makeText(getContext(), "Skipped", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-            return false;
-        });
-
+        return spannableString;
     }
 
-    // Helper method to show a dialog
+    /**
+     * Creates a ClickableSpan with custom styling and click behavior
+     * @param title The title for the dialog to show when clicked
+     * @return Configured ClickableSpan
+     */
+    private ClickableSpan createClickableSpan(String title) {
+        return new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                showDialog(title, "Here are the " + title + " details...");
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(getResources().getColor(R.color.soft_pink));
+                ds.setUnderlineText(false);
+            }
+        };
+    }
+
+    /**
+     * Shows a Material dialog with the specified title and message
+     * @param title Dialog title
+     * @param message Dialog content message
+     */
     private void showDialog(String title, String message) {
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton("OK", null)
                 .show();
+    }
+
+    /**
+     * Configures the toolbar with title, menu items, and click handlers
+     */
+    private void setupToolbar() {
+        MaterialToolbar toolbar = ((AuthActivity) requireActivity()).getToolBar();
+        toolbar.setTitle("Register");
+        setupToolbarMenu(toolbar);
+    }
+
+    /**
+     * Sets up the toolbar menu items and their click handlers
+     * @param toolbar The MaterialToolbar instance to configure
+     */
+    private void setupToolbarMenu(MaterialToolbar toolbar) {
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_auth);
+
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_skip) {
+                handleSkipAction();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    /**
+     * Handles the skip action from the toolbar menu
+     * TODO: Implement actual skip functionality
+     */
+    private void handleSkipAction() {
+        Toast.makeText(getContext(), "Skipped", Toast.LENGTH_SHORT).show();
+        // TODO: Implement navigation to main app flow for guest users
     }
 }

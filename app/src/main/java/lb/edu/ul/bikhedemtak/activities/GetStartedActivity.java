@@ -2,32 +2,35 @@ package lb.edu.ul.bikhedemtak.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
+
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.viewpager2.widget.ViewPager2;
-
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.GetStartedSlideAdapter;
 import lb.edu.ul.bikhedemtak.models.GetStartedSlide;
 
+/**
+ * Activity that handles the onboarding/introduction screens shown to users
+ * when they first launch the application. Uses ViewPager2 for smooth sliding
+ * between screens and DotsIndicator for navigation visualization.
+ */
 public class GetStartedActivity extends AppCompatActivity {
 
-    // UI Components
     private ViewPager2 viewPager;
-    private Button btnNext, btnGetStarted;
-    // Adapter for the ViewPager
+    private Button btnNext;
+    private Button btnGetStarted;
+    private Button btnSkip;
     private GetStartedSlideAdapter getStartedSlideAdapter;
+    private DotsIndicator dotsIndicator;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,86 +38,115 @@ public class GetStartedActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_get_started);
 
+        initializeViews();
+        setupSlides();
+        setupButtonListeners();
+    }
 
-        // Initialize UI components
+    /**
+     * Initializes all UI components used in the activity
+     */
+    private void initializeViews() {
         viewPager = findViewById(R.id.viewPager);
         btnNext = findViewById(R.id.btnNext);
         btnGetStarted = findViewById(R.id.btnGetStarted);
-        Button btnSkip = findViewById(R.id.btnSkip);
-        DotsIndicator dotsIndicator = findViewById(R.id.dots_indicator);
+        btnSkip = findViewById(R.id.btnSkip);
+        dotsIndicator = findViewById(R.id.dots_indicator);
+    }
 
-        // List of slides to be shown in the ViewPager
-        List<GetStartedSlide> getStartedSlides = new ArrayList<>();
+    /**
+     * Sets up the onboarding slides with their content and configures the ViewPager
+     */
+    private void setupSlides() {
+        List<GetStartedSlide> getStartedSlides = createSlidesList();
 
-        // Slides to be shown in the ViewPager with their respective images, titles, and descriptions
-        getStartedSlides.add(new GetStartedSlide(R.drawable.fixing,
-                "Discover the Service You Need",
-                "Browse through a variety of services and find the perfect match for what you're looking for."));
-
-        getStartedSlides.add(new GetStartedSlide(R.drawable.electrician,
-                "Offer Your Expertise",
-                "Become a service provider and start offering your skills to customers in your local area.s"));
-
-        getStartedSlides.add(new GetStartedSlide(R.drawable.fixing,
-                "Book on Your Terms",
-                "Choose the time that works best for you and book your service provider with ease, all based on your availability."));
-
-        getStartedSlides.add(new GetStartedSlide(R.drawable.map,
-                "Quick Services, Right Nearby",
-                "Get the job done fast with local service providers who are ready to assist you in your area, ensuring quick responses and timely solutions."));
-
-        getStartedSlides.add(new GetStartedSlide(R.drawable.man_holding_phone,
-                "Get Started Now",
-                "Create an account or log in to access local service providers and start booking services instantly."));
-
-        // Set the adapter for the ViewPager to display the slides
+        // Initialize and set adapter
         getStartedSlideAdapter = new GetStartedSlideAdapter(getStartedSlides);
         viewPager.setAdapter(getStartedSlideAdapter);
 
-        // Set the dots indicator to the ViewPager
+        // Attach dots indicator to ViewPager
         dotsIndicator.attachTo(viewPager);
 
-        // Register a callback to be invoked when the page changes
+        // Configure page change callback
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            // This method is called when the page changes
             public void onPageSelected(int position) {
-                // Update the visibility of the buttons based on the current page position
                 updateButtonsVisibility(position);
             }
         });
+    }
 
-        // Set a click listener for the "Next" button to go to the next page
+    /**
+     * Creates and returns the list of onboarding slides with their content
+     * @return List of GetStartedSlide objects
+     */
+    private List<GetStartedSlide> createSlidesList() {
+        List<GetStartedSlide> slides = new ArrayList<>();
+
+        slides.add(new GetStartedSlide(
+                R.drawable.fixing,
+                "Discover the Service You Need",
+                "Browse through a variety of services and find the perfect match for what you're looking for."
+        ));
+
+        slides.add(new GetStartedSlide(
+                R.drawable.electrician,
+                "Offer Your Expertise",
+                "Become a service provider and start offering your skills to customers in your local area."
+        ));
+
+        slides.add(new GetStartedSlide(
+                R.drawable.fixing,
+                "Book on Your Terms",
+                "Choose the time that works best for you and book your service provider with ease, all based on your availability."
+        ));
+
+        slides.add(new GetStartedSlide(
+                R.drawable.map,
+                "Quick Services, Right Nearby",
+                "Get the job done fast with local service providers who are ready to assist you in your area, ensuring quick responses and timely solutions."
+        ));
+
+        slides.add(new GetStartedSlide(
+                R.drawable.man_holding_phone,
+                "Get Started Now",
+                "Create an account or log in to access local service providers and start booking services instantly."
+        ));
+
+        return slides;
+    }
+
+    /**
+     * Sets up click listeners for all buttons in the activity
+     */
+    private void setupButtonListeners() {
+        // Next button - moves to next slide
         btnNext.setOnClickListener(v -> {
-            if (viewPager.getCurrentItem() < getStartedSlides.size() - 1) {
-                // Go to the next page
+            if (viewPager.getCurrentItem() < getStartedSlideAdapter.getItemCount() - 1) {
                 viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
             }
         });
 
-        // Set a click listener for the "Get Started" button to go to the Authentication Page
+        // Get Started button - launches authentication flow
         btnGetStarted.setOnClickListener(v -> {
-            // Toast
-            // Toast.makeText(this, "Get Started", Toast.LENGTH_SHORT).show();
-
-            // TODO: Go to the Authentication Page
-            // Go to the Authentication Page
             Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
         });
 
-        // Set a click listener for the "Skip" button to go to the HomePage as a Guest
-        btnSkip.setOnClickListener(v -> {
-            // temp Toast
+        // Skip button - launches guest flow (to be implemented)
+        findViewById(R.id.btnSkip).setOnClickListener(v -> {
             Toast.makeText(this, "Skip", Toast.LENGTH_SHORT).show();
-
-            // TODO: Go to the HomePage as a guest
+            // TODO: Implement guest flow navigation
         });
     }
 
-    // Update the visibility of the buttons based on the current page position
+    /**
+     * Updates the visibility of navigation buttons based on current slide position
+     * @param position Current slide position in the ViewPager
+     */
     private void updateButtonsVisibility(int position) {
-        btnNext.setVisibility(position < getStartedSlideAdapter.getItemCount() - 1 ? Button.VISIBLE : Button.GONE);
-        btnGetStarted.setVisibility(position == getStartedSlideAdapter.getItemCount() - 1 ? Button.VISIBLE : Button.GONE);
+        boolean isLastSlide = position == getStartedSlideAdapter.getItemCount() - 1;
+        btnNext.setVisibility(isLastSlide ? Button.GONE : Button.VISIBLE);
+        btnGetStarted.setVisibility(isLastSlide ? Button.VISIBLE : Button.GONE);
     }
 }
