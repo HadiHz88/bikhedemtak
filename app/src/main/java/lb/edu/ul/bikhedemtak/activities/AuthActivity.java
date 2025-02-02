@@ -1,17 +1,19 @@
 package lb.edu.ul.bikhedemtak.activities;
 
 import android.os.Bundle;
+import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -27,6 +29,7 @@ public class AuthActivity extends AppCompatActivity {
 
     // The Material Design toolbar for the authentication screens
     private MaterialToolbar authToolBar;
+    private MenuProvider menuProvider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,6 @@ public class AuthActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_auth);
 
-        // Configure window insets to handle system bars properly
-        setupWindowInsets();
-
         // Initialize and configure the toolbar
         setupToolbar();
 
@@ -47,34 +47,50 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     /**
-     * Configures window insets to handle system bars (status bar, navigation bar)
-     * properly in edge-to-edge mode
-     */
-    private void setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-    }
-
-    /**
      * Initializes and sets up the MaterialToolbar
      */
     private void setupToolbar() {
         authToolBar = findViewById(R.id.authToolBarId);
         setSupportActionBar(authToolBar);
-
-        // Setup default menu
-        authToolBar.inflateMenu(R.menu.menu_auth);
-
-
-        authToolBar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_skip) {
-                handleSkipAction();
-                return true;
+        // Initialize and add the menu provider once
+        menuProvider = new MenuProvider() {
+            @Override
+            public void onCreateMenu(@NonNull Menu menu, @NonNull MenuInflater menuInflater) {
+                menuInflater.inflate(R.menu.menu_auth, menu);
             }
-            return false;
+
+            @Override
+            public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
+                if (menuItem.getItemId() == R.id.action_skip) {
+                    Toast.makeText(AuthActivity.this, "Skip clicked", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            }
+
+            @Override
+            public void onMenuClosed(@NonNull Menu menu) {
+                MenuProvider.super.onMenuClosed(menu);
+            }
+        };
+        addMenuProvider(menuProvider);
+    }
+
+    public void updateToolbar(String title) {
+        authToolBar.setTitle(title);
+
+        authToolBar.post(() -> {
+            Menu menu = authToolBar.getMenu();
+            if (menu != null) {
+                MenuItem skipItem = menu.findItem(R.id.action_skip);
+                if (skipItem != null) {
+                    SpannableString styledTitle = new SpannableString(skipItem.getTitle());
+                    styledTitle.setSpan(new ForegroundColorSpan(ContextCompat.getColor(this, R.color.soft_pink)),
+                            0, styledTitle.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    skipItem.setTitle(styledTitle);
+                    skipItem.setVisible(true);
+                }
+            }
         });
     }
 

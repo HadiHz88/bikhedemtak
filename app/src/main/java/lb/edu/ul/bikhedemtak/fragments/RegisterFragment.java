@@ -7,7 +7,10 @@ import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -51,7 +56,8 @@ public class RegisterFragment extends Fragment {
 
         setupNavigation(view);
         setupPolicyText(view);
-        updateToolbar();
+
+        ((AuthActivity) requireActivity()).updateToolbar("Register");
     }
 
     /**
@@ -146,22 +152,5 @@ public class RegisterFragment extends Fragment {
                 .setMessage(message)
                 .setPositiveButton("OK", null)
                 .show();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateToolbar(); // Update the toolbar whenever the fragment is visible
-    }
-
-    private void updateToolbar() {
-        MaterialToolbar toolbar = ((AuthActivity) requireActivity()).getToolBar();
-        toolbar.setTitle("Register"); // Update the title
-
-        // Ensure the "Skip" button is visible
-        MenuItem skipItem = toolbar.getMenu().findItem(R.id.action_skip);
-        if (skipItem != null) {
-            skipItem.setVisible(true); // Show the "Skip" button
-        }
     }
 }
