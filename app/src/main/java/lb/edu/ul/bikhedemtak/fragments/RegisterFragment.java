@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -50,7 +51,7 @@ public class RegisterFragment extends Fragment {
 
         setupNavigation(view);
         setupPolicyText(view);
-        setupToolbar();
+        updateToolbar();
     }
 
     /**
@@ -147,38 +148,20 @@ public class RegisterFragment extends Fragment {
                 .show();
     }
 
-    /**
-     * Configures the toolbar with title, menu items, and click handlers
-     */
-    private void setupToolbar() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateToolbar(); // Update the toolbar whenever the fragment is visible
+    }
+
+    private void updateToolbar() {
         MaterialToolbar toolbar = ((AuthActivity) requireActivity()).getToolBar();
-        toolbar.setTitle("Register");
-        setupToolbarMenu(toolbar);
-    }
+        toolbar.setTitle("Register"); // Update the title
 
-    /**
-     * Sets up the toolbar menu items and their click handlers
-     * @param toolbar The MaterialToolbar instance to configure
-     */
-    private void setupToolbarMenu(MaterialToolbar toolbar) {
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_auth);
-
-        toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_skip) {
-                handleSkipAction();
-                return true;
-            }
-            return false;
-        });
-    }
-
-    /**
-     * Handles the skip action from the toolbar menu
-     * TODO: Implement actual skip functionality
-     */
-    private void handleSkipAction() {
-        Toast.makeText(getContext(), "Skipped", Toast.LENGTH_SHORT).show();
-        // TODO: Implement navigation to main app flow for guest users
+        // Ensure the "Skip" button is visible
+        MenuItem skipItem = toolbar.getMenu().findItem(R.id.action_skip);
+        if (skipItem != null) {
+            skipItem.setVisible(true); // Show the "Skip" button
+        }
     }
 }

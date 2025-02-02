@@ -84,19 +84,19 @@ public class GetStartedActivity extends AppCompatActivity {
         List<GetStartedSlide> slides = new ArrayList<>();
 
         slides.add(new GetStartedSlide(
-                R.drawable.fixing,
+                R.drawable.customer_service,
                 "Discover the Service You Need",
                 "Browse through a variety of services and find the perfect match for what you're looking for."
         ));
 
         slides.add(new GetStartedSlide(
-                R.drawable.electrician,
+                R.drawable.best_customer_experience,
                 "Offer Your Expertise",
                 "Become a service provider and start offering your skills to customers in your local area."
         ));
 
         slides.add(new GetStartedSlide(
-                R.drawable.fixing,
+                R.drawable.handshake,
                 "Book on Your Terms",
                 "Choose the time that works best for you and book your service provider with ease, all based on your availability."
         ));
@@ -108,7 +108,7 @@ public class GetStartedActivity extends AppCompatActivity {
         ));
 
         slides.add(new GetStartedSlide(
-                R.drawable.man_holding_phone,
+                R.drawable.handshake,
                 "Get Started Now",
                 "Create an account or log in to access local service providers and start booking services instantly."
         ));

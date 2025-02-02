@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.MenuItem;
+import android.widget.Toast;
+
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -62,6 +64,23 @@ public class AuthActivity extends AppCompatActivity {
     private void setupToolbar() {
         authToolBar = findViewById(R.id.authToolBarId);
         setSupportActionBar(authToolBar);
+
+        // Setup default menu
+        authToolBar.inflateMenu(R.menu.menu_auth);
+
+
+        authToolBar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.action_skip) {
+                handleSkipAction();
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void handleSkipAction() {
+        Toast.makeText(this, "Skipped", Toast.LENGTH_SHORT).show();
+        // TODO: Implement navigation to main app flow for guest users
     }
 
     /**
