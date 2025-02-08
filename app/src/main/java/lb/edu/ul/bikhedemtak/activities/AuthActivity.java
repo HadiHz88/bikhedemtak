@@ -1,5 +1,6 @@
 package lb.edu.ul.bikhedemtak.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -9,7 +10,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -36,7 +36,7 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Enable edge-to-edge display for better visual experience
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_auth);
 
         // Initialize and configure the toolbar
@@ -95,8 +95,8 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void handleSkipAction() {
-        Toast.makeText(this, "Skipped", Toast.LENGTH_SHORT).show();
-        // TODO: Implement navigation to main app flow for guest users
+        Intent skipping = new Intent(AuthActivity.this, TaskerProfileActivity.class);
+        startActivity(skipping);
     }
 
     /**

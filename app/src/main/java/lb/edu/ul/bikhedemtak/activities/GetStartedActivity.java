@@ -35,7 +35,7 @@ public class GetStartedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+//        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_get_started);
 
         initializeViews();
@@ -133,10 +133,10 @@ public class GetStartedActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // Skip button - launches guest flow (to be implemented)
+        // Skip button - launches guest flow
         findViewById(R.id.btnSkip).setOnClickListener(v -> {
-            Toast.makeText(this, "Skip", Toast.LENGTH_SHORT).show();
-            // TODO: Implement guest flow navigation
+            Intent skipping = new Intent(this, TaskerProfileActivity.class);
+            startActivity(skipping);
         });
     }
 

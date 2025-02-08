@@ -1,23 +1,16 @@
 package lb.edu.ul.bikhedemtak.fragments;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import com.google.android.material.appbar.MaterialToolbar;
+
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.activities.AuthActivity;
 
