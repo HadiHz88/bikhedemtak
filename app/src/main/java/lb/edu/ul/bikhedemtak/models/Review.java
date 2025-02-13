@@ -1,21 +1,36 @@
 package lb.edu.ul.bikhedemtak.models;
 
-public class Review {
-    private int id;
-    private int userId;
-    private int taskerId;
-    private String review;
-    private float rating;
+import java.util.Date;
 
-    public Review() {
+public class Review {
+    private String reviewerName;
+    private String reviewContent;
+    private String date;
+    private float rating;
+    private String profileImageUrl;
+
+    public Review(String reviewerName, String reviewContent, String date, float rating, String profileImageUrl) {
+        this.reviewerName = reviewerName;
+        this.reviewContent = reviewContent;
+        this.date = date;
+        this.rating = rating;
+        this.profileImageUrl = profileImageUrl;
     }
 
-    public Review(int id, int userId, int taskerId, String review, float rating) {
-        this.id = id;
-        this.userId = userId;
-        this.taskerId = taskerId;
-        this.review = review;
-        this.rating = rating;
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 
     public float getRating() {
@@ -26,35 +41,19 @@ public class Review {
         this.rating = rating;
     }
 
-    public int getId() {
-        return id;
+    public String getReviewContent() {
+        return reviewContent;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setReviewContent(String reviewContent) {
+        this.reviewContent = reviewContent;
     }
 
-    public String getReview() {
-        return review;
+    public String getReviewerName() {
+        return reviewerName;
     }
 
-    public void setReview(String review) {
-        this.review = review;
-    }
-
-    public int getTaskerId() {
-        return taskerId;
-    }
-
-    public void setTaskerId(int taskerId) {
-        this.taskerId = taskerId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setReviewerName(String reviewerName) {
+        this.reviewerName = reviewerName;
     }
 }

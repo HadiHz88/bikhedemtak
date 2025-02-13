@@ -2,13 +2,10 @@ package lb.edu.ul.bikhedemtak.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.textfield.TextInputLayout;
 
 import android.widget.Button;
-import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 import java.util.ArrayList;
@@ -47,6 +44,11 @@ public class GetStartedActivity extends AppCompatActivity {
      * Initializes all UI components used in the activity
      */
     private void initializeViews() {
+
+        // Set up toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         viewPager = findViewById(R.id.viewPager);
         btnNext = findViewById(R.id.btnNext);
         btnGetStarted = findViewById(R.id.btnGetStarted);
