@@ -1,26 +1,38 @@
 package lb.edu.ul.bikhedemtak.activities;
 
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.material.appbar.MaterialToolbar;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.ReviewAdapter;
 import lb.edu.ul.bikhedemtak.models.Review;
 
+/**
+ * Activity to display all reviews.
+ */
 public class ViewAllReviewsActivity extends AppCompatActivity {
 
+    // RecyclerView to display the list of reviews
     RecyclerView allReviewsRecyclerView;
+    // List to hold the reviews
     private List<Review> reviews;
-
+    // Adapter for the RecyclerView
     ReviewAdapter reviewAdapter;
 
+    /**
+     * Called when the activity is first created.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down then this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle). Note: Otherwise it is null.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,23 +41,27 @@ public class ViewAllReviewsActivity extends AppCompatActivity {
         // Set up the Toolbar
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("All Reviews");
-
         // Enable the back button
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        // Initialize the RecyclerView and set its layout manager
         allReviewsRecyclerView = findViewById(R.id.allReviewsRecyclerView);
         allReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // Get sample reviews and set the adapter
         reviews = getSampleReviews();
         reviewAdapter = new ReviewAdapter(reviews);
         allReviewsRecyclerView.setAdapter(reviewAdapter);
-
     }
-    // Temporary method to create sample reviews (replace with your actual data source)
+
+    /**
+     * Temporary method to create sample reviews. Replace with your actual data source.
+     *
+     * @return A list of sample reviews.
+     */
     private List<Review> getSampleReviews() {
         List<Review> reviews = new ArrayList<>();
 

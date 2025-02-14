@@ -39,4 +39,9 @@ public class SharedPrefsManager {
     public static boolean isLoggedIn(Context context) {
         return getToken(context) != null;
     }
+
+    public static String getUserName(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(KEY_NAME, "User");
+    }
 }

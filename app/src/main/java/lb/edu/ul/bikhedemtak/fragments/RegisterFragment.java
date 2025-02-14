@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.activities.AuthActivity;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
+import lb.edu.ul.bikhedemtak.testing.TestActivity;
 import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 /**
@@ -130,7 +131,7 @@ public class RegisterFragment extends Fragment {
 
                                     // Navigate to main activity
                                     requireActivity().finish();
-                                    startActivity(new Intent(requireContext(), MainActivity.class));
+                                    startActivity(new Intent(requireContext(), TestActivity.class));
                                 } else {
                                     showError(response.optString("message", "Registration failed"));
                                 }
@@ -142,6 +143,7 @@ public class RegisterFragment extends Fragment {
                         @Override
                         public void onFailure(String error) {
                             showError(error);
+                            Log.d("RegisterFragment", "onFailure: " + error);
                         }
                     }
             );

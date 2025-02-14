@@ -18,7 +18,7 @@ import java.util.Map;
  * It supports GET and POST requests and implements a singleton pattern.
  */
 public class ApiRequest {
-    private static final String BASE_URL = "http://yourserver.com/bikhedemtak/api/";
+    private static final String BASE_URL = "http://10.0.2.2:80/bikhedmtak_mobile_api/api/";
     private static final int TIMEOUT_MS = 30000; // 30 seconds timeout
     private static final int MAX_RETRIES = 1;
     private static final float BACKOFF_MULTIPLIER = 1.0f;
@@ -88,6 +88,7 @@ public class ApiRequest {
         configureRequest(request);
         getRequestQueue(context).add(request);
     }
+
 
     /**
      * Makes a POST request.

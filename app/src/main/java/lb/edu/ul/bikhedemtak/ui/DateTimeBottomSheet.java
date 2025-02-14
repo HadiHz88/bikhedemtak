@@ -22,13 +22,25 @@ import java.util.Locale;
 
 import lb.edu.ul.bikhedemtak.R;
 
+/**
+ * A BottomSheetDialogFragment that allows users to select a date and time.
+ */
 public class DateTimeBottomSheet extends BottomSheetDialogFragment {
     private TextView selectedDate;
     private TextView selectedTime;
     private MaterialButton btnSelectDateTime;
     private DateTimePickerListener listener;
 
+    /**
+     * Interface for listening to date and time selection events.
+     */
     public interface DateTimePickerListener {
+        /**
+         * Called when a date and time are selected.
+         *
+         * @param date the selected date
+         * @param time the selected time
+         */
         void onDateTimeSelected(String date, String time);
     }
 
@@ -57,6 +69,9 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 
+    /**
+     * Shows the date picker dialog.
+     */
     private void showDatePicker() {
         MaterialDatePicker<Long> datePicker = MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select Date")
@@ -80,6 +95,9 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
         datePicker.show(getParentFragmentManager(), "DATE_PICKER");
     }
 
+    /**
+     * Shows the time picker dialog.
+     */
     private void showTimePicker() {
         MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_12H)
@@ -99,6 +117,11 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
         timePicker.show(getParentFragmentManager(), "TIME_PICKER");
     }
 
+    /**
+     * Sets the listener for date and time selection events.
+     *
+     * @param listener the listener to set
+     */
     public void setListener(DateTimePickerListener listener) {
         this.listener = listener;
     }
