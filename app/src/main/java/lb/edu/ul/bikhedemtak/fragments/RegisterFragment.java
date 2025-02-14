@@ -1,10 +1,12 @@
 package lb.edu.ul.bikhedemtak.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -24,9 +27,16 @@ import androidx.lifecycle.Lifecycle;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONObject;
+
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.activities.AuthActivity;
+import lb.edu.ul.bikhedemtak.api.ApiRequest;
+import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 /**
  * Fragment handling user registration functionality.
@@ -34,6 +44,9 @@ import lb.edu.ul.bikhedemtak.activities.AuthActivity;
  * and skip options. Includes styled text with clickable Terms of Service and Privacy Policy.
  */
 public class RegisterFragment extends Fragment {
+
+    private EditText etFullName, etEmail, etPhone, etPassword, etConfirmPassword;
+    private MaterialButton buttonRegister;
 
     /**
      * Required empty constructor for fragments.
@@ -54,11 +67,130 @@ public class RegisterFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        initializeViews(view);
+        setupListeners();
         setupNavigation(view);
         setupPolicyText(view);
 
         ((AuthActivity) requireActivity()).updateToolbar("Register");
     }
+
+    private void initializeViews(View view) {
+        etFullName = view.findViewById(R.id.editTextFullName);
+        etEmail = view.findViewById(R.id.editTextEmail);
+        etPhone = view.findViewById(R.id.editTextPhone);
+        etPassword = view.findViewById(R.id.editTextPassword);
+        etConfirmPassword = view.findViewById(R.id.editTextConfirmPassword);
+        buttonRegister = view.findViewById(R.id.buttonRegister);
+    }
+
+    private void setupListeners() {
+        buttonRegister.setOnClickListener(v -> attemptRegistration());
+    }
+
+    private void attemptRegistration() {
+        // Get input values
+        String fullName = etFullName.getText().toString().trim();
+        String email = etEmail.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
+        String password = etPassword.getText().toString();
+        String confirmPassword = etConfirmPassword.getText().toString();
+
+        // Validate input
+        if (!validateInput(fullName, email, password, confirmPassword)) {
+            return;
+        }
+
+        // Show loading state
+        buttonRegister.setEnabled(false);
+        buttonRegister.setText("Registering...");
+
+        try {
+            JSONObject registrationParams = new JSONObject();
+            registrationParams.put("name", fullName);
+            registrationParams.put("email", email);
+            registrationParams.put("password", password);
+            if (!TextUtils.isEmpty(phone)) {
+                registrationParams.put("phone", phone);
+            }
+
+            ApiRequest.getInstance().makePostRequest(
+                    requireContext(),
+                    "register.php",
+                    registrationParams,
+                    new ApiRequest.ResponseListener<JSONObject>() {
+                        @Override
+                        public void onSuccess(JSONObject response) {
+                            try {
+                                if (response.getString("status").equals("success")) {
+                                    JSONObject userData = response.getJSONObject("data");
+
+                                    // Save user data
+                                    SharedPrefsManager.saveUserData(requireContext(), userData);
+
+                                    // Navigate to main activity
+                                    requireActivity().finish();
+                                    startActivity(new Intent(requireContext(), MainActivity.class));
+                                } else {
+                                    showError(response.optString("message", "Registration failed"));
+                                }
+                            } catch (Exception e) {
+                                showError("Error processing response");
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(String error) {
+                            showError(error);
+                        }
+                    }
+            );
+        } catch (Exception e) {
+            showError("Error creating request");
+        }
+    }
+
+    private boolean validateInput(String fullName, String email, String password, String confirmPassword) {
+        boolean isValid = true;
+
+        if (TextUtils.isEmpty(fullName)) {
+            ((TextInputLayout) etFullName.getParent().getParent()).setError("Name is required");
+            isValid = false;
+        }
+
+        if (TextUtils.isEmpty(email)) {
+            ((TextInputLayout) etEmail.getParent().getParent()).setError("Email is required");
+            isValid = false;
+        } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            ((TextInputLayout) etEmail.getParent().getParent()).setError("Invalid email format");
+            isValid = false;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            ((TextInputLayout) etPassword.getParent().getParent()).setError("Password is required");
+            isValid = false;
+        } else if (password.length() < 8) {
+            ((TextInputLayout) etPassword.getParent().getParent()).setError("Password must be at least 8 characters");
+            isValid = false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            ((TextInputLayout) etConfirmPassword.getParent().getParent()).setError("Passwords do not match");
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+    private void showError(String message) {
+        requireActivity().runOnUiThread(() -> {
+            buttonRegister.setEnabled(true);
+            buttonRegister.setText(R.string.sign_up);
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show();
+        });
+    }
+
+
 
     /**
      * Sets up navigation for the fragment, including the login button click handler
