@@ -39,6 +39,13 @@ dependencies {
     implementation (libs.viewpager2)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation (libs.navigation.fragment.ktx)
+    implementation (libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.navigation.ui)
+    implementation (libs.androidx.fragment.ktx)
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
     implementation(libs.circleimageview)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
@@ -47,11 +54,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(libs.navigation.fragment.v287)
-    implementation(libs.navigation.ui.v273)
-    implementation("com.google.android.material:material:1.9.0")
-    implementation("com.github.bumptech.glide:glide:4.15.1")
-
-    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 }
-

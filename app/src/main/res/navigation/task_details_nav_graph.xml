@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/nav_graph"
+app:startDestination="@id/taskDetailsFragment">
+
+<fragment
+    android:id="@+id/taskDetailsFragment"
+    android:name="lb.edu.ul.bikhedemtak.fragments.TaskDetailsFragment"
+    android:label="TaskDetailsFragment"
+    tools:layout="@layout/task_details_fragment">
+
+    <action android:id="@+id/action_taskDetailsFragment_to_reviewAndConfirmFragment" app:destination="@id/reviewAndConfirmFragment"/>
+</fragment>
+<fragment android:id="@+id/reviewAndConfirmFragment"
+    android:name="lb.edu.ul.bikhedemtak.fragments.ReviewAndConfirmFragment"
+    android:label="ReviewAndConfirmFragment"
+    tools:layout="@layout/review_confirm_fragment"/>
+
+</navigation>
