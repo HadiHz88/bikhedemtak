@@ -25,6 +25,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/ivTaskerProfilePic"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -46,7 +47,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvTaskerTag"
+                    android:id="@+id/tvTaskerSkill"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Electrician"
@@ -138,6 +139,7 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/tvTaskerDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/lorem_ipsum" />
