@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomCurvedCorners" parent="">
+        <item name="cornerSize">16dp</item> <!-- Adjust the dp value to control curve radius -->
+    </style>
+
+</resources>
