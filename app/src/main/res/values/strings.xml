@@ -15,7 +15,6 @@
     <string name="price_details">Price Details</string>
     <string name="total_rate">Total Rate</string>
 
-
     <!--    App-specific -->
     <string name="request_service">Request Service</string>
     <string name="offer_sent">Offer sent</string>
@@ -63,8 +62,13 @@
     <string name="logout">Logout</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="reset_password">Reset Password</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="create_account">Create Account</string>
 
     <!-- Messages -->
     <string name="welcome">Welcome</string>
@@ -93,6 +97,7 @@
     <string name="password_placeholder">Enter your password</string>
     <string name="first_name_placeholder">Enter your first name</string>
     <string name="last_name_placeholder">Enter your last name</string>
+    <string name="full_name_placeholder">Enter your full name</string>
     <string name="phone_placeholder">Enter your phone number</string>
     <string name="address_placeholder">Enter your address</string>
 
@@ -137,6 +142,9 @@
     <string name="paste">Paste</string>
     <string name="clear">Clear</string>
     <string name="refresh">Refresh</string>
+    <string name="policy_agreement">By signing up, you agree to our Terms of Service, and Privacy Policy</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="privacy_policy">Privacy Policy</string>
 
     <!--    Notifications -->
     <string name="notif_new_message">You have a new message</string>
@@ -204,5 +212,23 @@
     </string>
 
 
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="TODO">TODO</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
+    <string name="lorem_ipsum">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
+        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
+        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
+        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
+        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
+        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus
+    </string>
 
 </resources>
