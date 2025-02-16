@@ -97,4 +97,9 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewView
     public int getItemCount() {
         return reviewList.size();
     }
+
+    public void updateReviews(List<Review> newReviews) {
+        this.reviewList = newReviews;
+        notifyDataSetChanged();
+    }
 }

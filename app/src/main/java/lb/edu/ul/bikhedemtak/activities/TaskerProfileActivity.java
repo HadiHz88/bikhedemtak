@@ -14,11 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -42,8 +42,9 @@ public class TaskerProfileActivity extends AppCompatActivity {
     private MaterialToolbar toolbar;
 
     private ImageView taskerProfilePicture;
-    private TextView taskerName, taskerSkill, taskerRating, taskerAvailability, taskerDescription;
+    private TextView taskerName, taskerSkill, taskerRating, taskerAvailability, taskerDescription, taskerHourlyRate;
     private RatingBar taskerRatingBar;
+    List<Review> allReviews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
         taskerRatingBar = findViewById(R.id.rbTaskerRating);
         taskerDescription = findViewById(R.id.tvTaskerDescription);
         taskerProfilePicture = findViewById(R.id.ivTaskerProfilePic);
+        taskerHourlyRate = findViewById(R.id.tvTaskerHourlyRate);
     }
 
     /**
@@ -92,23 +94,25 @@ public class TaskerProfileActivity extends AppCompatActivity {
      */
     private void fetchTaskerDetails() {
         int taskerId = 1; // Temporary tasker ID
-        String endpoint = "getTaskerDetails.php?tasker_id=" + taskerId;
+        String taskerDetailsEndpoint = "getTaskerDetails.php?tasker_id=" + taskerId;
 
-        ApiRequest.getInstance().makeGetObjectRequest(this, endpoint, new ApiRequest.ResponseListener<JSONObject>() {
+        ApiRequest.getInstance().makeGetObjectRequest(this, taskerDetailsEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override
             public void onSuccess(JSONObject response) {
 //                Log.d("TaskerProfileActivity", "Response: " + response);
                 try {
                     JSONObject data = response.getJSONObject("data");
 
+                    allReviews = new ArrayList<>();
                     String name = data.getString("name");
                     String profilePicture = data.optString("profile_picture", "");
                     String skill = data.getString("skill");
                     String availabilityStatus = data.getBoolean("availability_status") ? "Available" : "Unavailable";
                     String rating = String.valueOf(data.getInt("rating"));
                     String description = data.getString("description");
+                    String hourlyRate = String.valueOf(data.getInt("hourly_rate"));
 
-                    updateTaskerDetails(name, profilePicture, skill, availabilityStatus, rating, description);
+                    updateTaskerDetails(name, profilePicture, skill, availabilityStatus, rating, description, hourlyRate);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -124,12 +128,13 @@ public class TaskerProfileActivity extends AppCompatActivity {
     /**
      * Update the tasker details in the UI.
      */
-    private void updateTaskerDetails(String name, String profilePicture, String skill, String availabilityStatus, String rating, String description) {
+    private void updateTaskerDetails(String name, String profilePicture, String skill, String availabilityStatus, String rating, String description, String hourlyRate) {
         taskerName.setText(name);
         taskerSkill.setText(skill);
         taskerRating.setText(rating);
         taskerRatingBar.setRating(Float.parseFloat(rating));
         taskerDescription.setText(description);
+        taskerHourlyRate.setText("$" + hourlyRate + "/hr");
 
         if (profilePicture.isEmpty()) {
             Glide.with(this).load(R.drawable.default_pp).into(taskerProfilePicture);
@@ -141,9 +146,56 @@ public class TaskerProfileActivity extends AppCompatActivity {
      */
     private void setupRecyclerView() {
         reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        reviewAdapter = new ReviewAdapter(getSampleReviews().subList(0, 2));
+
+        // Initially set adapter with empty list to avoid no adapter attached error
+        reviewAdapter = new ReviewAdapter(new ArrayList<>());
         reviewsRecyclerView.setAdapter(reviewAdapter);
+
+        String reviewsEndpoint = "getTaskerReviews.php?tasker_id=1"; // Temporary tasker ID
+
+        ApiRequest.getInstance().makeGetObjectRequest(this, reviewsEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if (response.getBoolean("success")) {
+                        JSONArray reviewsArray = response.getJSONArray("reviews");
+
+                        allReviews = new ArrayList<>();
+                        for (int i = 0; i < reviewsArray.length(); i++) {
+                            JSONObject reviewObject = reviewsArray.getJSONObject(i);
+                            String reviewerName = reviewObject.getString("reviewer_name");
+                            String reviewContent = reviewObject.getString("review_content");
+                            String reviewDate = reviewObject.getString("created_at");
+                            float rating = (float) reviewObject.getDouble("rating");
+                            String profilePicture = reviewObject.optString("reviewer_profile_picture", "");
+
+                            allReviews.add(new Review(reviewerName, reviewContent, reviewDate, rating, profilePicture));
+                        }
+
+                        // Limit the reviews to 4
+                        List<Review> limitedReviews = allReviews.size() > 4 ? allReviews.subList(0, 4) : allReviews;
+
+                        // Update the adapter with limited reviews
+                        reviewAdapter.updateReviews(limitedReviews);
+                    } else {
+                        Log.d("TaskerProfileActivity", "No reviews found");
+                        // Optionally handle empty reviews (e.g., show a message)
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d("TaskerProfileActivity", "Error: " + error);
+                // Fallback to sample reviews in case of failure
+                reviewAdapter.updateReviews(getSampleReviews());
+            }
+        });
     }
+
+
 
     /**
      * Temporary method to create sample reviews (replace with actual data source).
@@ -175,7 +227,8 @@ public class TaskerProfileActivity extends AppCompatActivity {
      * Open the "View All Reviews" activity.
      */
     private void openViewAllReviewsActivity() {
-        Intent intent = new Intent(this, ViewAllReviewsActivity.class);
+        Intent intent = new Intent(TaskerProfileActivity.this, ViewAllReviewsActivity.class);
+        intent.putExtra("reviews_list", new ArrayList<>(allReviews));
         startActivity(intent);
     }
 }
