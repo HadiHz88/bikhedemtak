@@ -1,11 +1,14 @@
 package lb.edu.ul.bikhedemtak.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +24,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.activities.MainActivity;
 
 /**
  * A BottomSheetDialogFragment that allows users to select a date and time.
@@ -44,30 +48,38 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
         void onDateTimeSelected(String date, String time);
     }
 
-    @Nullable
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.date_time_bottom_sheet, container, false);
 
+        // Initialize UI components
         selectedDate = view.findViewById(R.id.selectedDate);
         selectedTime = view.findViewById(R.id.selectedTime);
         btnSelectDateTime = view.findViewById(R.id.btnSelectDateTime);
 
+        // Set click listeners for date and time pickers
         view.findViewById(R.id.datePickerContainer).setOnClickListener(v -> showDatePicker());
         view.findViewById(R.id.timePickerContainer).setOnClickListener(v -> showTimePicker());
 
+        // Handle button click
         btnSelectDateTime.setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onDateTimeSelected(
-                        selectedDate.getText().toString(),
-                        selectedTime.getText().toString()
-                );
-            }
-            dismiss();
+            String date = selectedDate.getText().toString();
+            String time = selectedTime.getText().toString();
+
+            // Retrieve the tasker_id from the arguments
+            int taskerId = getArguments() != null ? getArguments().getInt("tasker_id", -1) : -1;
+
+//            Log.d("DateTimeBottomSheet", "selected date: " + date + " " + time);
+
+            // Create the intent to pass data back to MainActivity
+            Intent i = new Intent(getContext(), MainActivity.class);
+            i.putExtra("tasker_id", taskerId); // Pass tasker_id as an integer
+            i.putExtra("booking_time", date + " " + time); // Pass the combined date and time
+            startActivity(i); // Start MainActivity with the passed data
         });
 
         return view;
     }
+
 
     /**
      * Shows the date picker dialog.
@@ -87,7 +99,7 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
             } else if (DateUtils.isToday(selected.getTimeInMillis() - DateUtils.DAY_IN_MILLIS)) {
                 selectedDate.setText("Tomorrow");
             } else {
-                selectedDate.setText(new SimpleDateFormat("MMM dd", Locale.getDefault())
+                selectedDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
                         .format(selected.getTime()));
             }
         });
@@ -110,7 +122,7 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
             Calendar selected = Calendar.getInstance();
             selected.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
             selected.set(Calendar.MINUTE, timePicker.getMinute());
-            selectedTime.setText(new SimpleDateFormat("h:mm a", Locale.getDefault())
+            selectedTime.setText(new SimpleDateFormat(" HH:mm:ss", Locale.getDefault())
                     .format(selected.getTime()));
         });
 

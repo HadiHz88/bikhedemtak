@@ -216,12 +216,14 @@ public class TaskerProfileActivity extends AppCompatActivity {
      * Open the date and time picker bottom sheet.
      */
     private void openDateTimePicker() {
+        Bundle bundle = new Bundle();
+        bundle.putInt("tasker_id", 1); // Temporary tasker ID
+
         DateTimeBottomSheet bottomSheet = new DateTimeBottomSheet();
-        bottomSheet.setListener((date, time) -> {
-            // Handle date and time selection
-        });
+        bottomSheet.setArguments(bundle);
         bottomSheet.show(getSupportFragmentManager(), "dateTimePicker");
     }
+
 
     /**
      * Open the "View All Reviews" activity.
