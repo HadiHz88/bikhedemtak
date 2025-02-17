@@ -12,7 +12,7 @@ import androidx.navigation.ui.NavigationUI;
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class BookingTaskActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
