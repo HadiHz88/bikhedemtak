@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Back Button -->
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="16dp"
+        android:drawableLeft="@drawable/ic_arrow_left"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Back"
+        android:textColor="@color/black"/>
+
+    <!-- Spinner for Gift Cards -->
+
+    <Spinner
+        android:id="@+id/spGiftCards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/gift_cards_array" />
+
+    <!-- Buy Gift Card Button -->
+    <Button
+        android:id="@+id/btnBuyGiftCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Buy Gift Card"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

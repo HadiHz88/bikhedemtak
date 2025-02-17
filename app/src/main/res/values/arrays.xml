@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="availability_options">
+        <item>Always Available</item>
+        <item>Partially Available</item>
+        <item>Rarely Available</item>
+    </string-array>
+</resources>
