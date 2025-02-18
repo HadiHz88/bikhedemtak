@@ -186,5 +186,21 @@
         diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
         ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus
     </string>
+    <string name="book">Book</string>
+
+    <string name="taskerName_text">You\'ve booked Dianne</string>
+    <string name="taskerStatusInfo_text">Dianne is currently offline and will reach out once available in the...</string>
+
+    <string name="calendarDate_text"> Friday - May 22, 2022</string>
+    <string name="hour_text">9:30 am</string>
+
+    <string name="pricePerHour_text">$18/hr</string>
+    <string name="supportFee_text">$10</string>
+    <string name="totalRate_text">$28</string>
+
+    <string name="location_text">San Francisco, CA</string>
+    <string name="taskNotes_text">Hey, how are you?</string>
+
+    <string name="leaveFeedback_text">Leave feedback about tasker</string>
 
 </resources>

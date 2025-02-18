@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_gravity="center"
+    tools:context=".activities.FeedbackActivity">
+
+    <ImageView
+        android:id="@+id/taskerImg"
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:scaleType="centerCrop"
+        android:clipToOutline="true"
+        android:background="@drawable/circular_image"
+        android:src="@drawable/default_pp" />
+
+    <TextView
+        android:id="@+id/rateTaskerTv"
+        android:layout_marginTop="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="Rate Dianne Russell"/>
+
+    <RatingBar
+        android:id="@+id/taskerRatingBar"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
+    <TextView
+        android:layout_marginTop="20sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Leave your feedback here"
+        android:gravity="center"
+        android:textSize="18sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="95dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:id="@+id/friendlyButton"
+                android:layout_width="180dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_border2"
+                android:drawableLeft="@drawable/check_ic"
+                android:text="Friendly"
+                android:textSize="15sp"
+                android:textColor="@color/purple_grey"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/supportiveButton"
+                android:layout_width="180dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_border2"
+                android:drawableLeft="@drawable/check_ic"
+                android:text="Supportive"
+                android:textSize="15sp"
+                android:textColor="@color/purple_grey"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="5sp">
+
+            <Button
+                android:id="@+id/superTaskerButton"
+                android:layout_width="180dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_border2"
+                android:drawableLeft="@drawable/check_ic"
+                android:text="Super Tasker"
+                android:textSize="15sp"
+                android:textColor="@color/purple_grey"
+                android:layout_marginRight="10dp"/>
+
+            <Button
+                android:id="@+id/fastWorkerButton"
+                android:layout_width="180dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:background="@drawable/button_border2"
+                android:drawableLeft="@drawable/check_ic"
+                android:text="Fast Worker"
+                android:textSize="15sp"
+                android:textColor="@color/purple_grey"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_marginTop="10dp">
+
+        <EditText
+            android:id="@+id/leaveFeedbackEd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textLongMessage"
+            android:hint="@string/leaveFeedback_text"
+            android:textSize="16sp"
+            android:gravity="clip_vertical"
+            android:padding="10sp"
+            android:background="@drawable/button_border2"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="vertical"
+        android:layout_marginTop="10sp">
+
+        <Button
+            android:id="@+id/submitFeedbackButton"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Submit"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
