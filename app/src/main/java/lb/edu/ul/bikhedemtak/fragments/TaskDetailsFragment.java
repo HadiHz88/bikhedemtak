@@ -11,7 +11,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.activities.MainActivity;
+import lb.edu.ul.bikhedemtak.activities.BookingTaskActivity;
 import lb.edu.ul.bikhedemtak.databinding.TaskDetailsFragmentBinding;
 
 
@@ -33,8 +33,8 @@ public class TaskDetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         // Safely set Toolbar title (if needed)
-        if (getActivity() != null && ((MainActivity) getActivity()).getSupportActionBar() != null) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle("Task Details");
+        if (getActivity() != null && ((BookingTaskActivity) getActivity()).getSupportActionBar() != null) {
+            ((BookingTaskActivity) getActivity()).getSupportActionBar().setTitle("Task Details");
         }
 
         // Handle button click to navigate

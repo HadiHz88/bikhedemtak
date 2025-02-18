@@ -47,9 +47,9 @@
                         android:src="@drawable/calendar" />
 
                     <TextView
+                        android:id="@+id/bookingDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Friday-May 27, 2022"
                         android:textSize="14sp" />
                 </TableRow>
                 <!-- Time field  -->
@@ -62,9 +62,9 @@
                         android:src="@drawable/clock" />
 
                     <TextView
+                        android:id="@+id/bookingTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="9:30 am"
                         android:textSize="14sp" />
                 </TableRow>
             </TableLayout>
@@ -197,14 +197,14 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Support Free"
+            android:text="@string/total_rate"
             android:textSize="15dp"
             android:layout_weight="1" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="$10"
+            android:text="$28"
             android:textSize="15dp"
             android:layout_weight="1"
             android:gravity="end"
@@ -226,19 +226,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/total_rate"
+            android:text="Description"
             android:textSize="20dp"
             android:textStyle="bold"
             android:layout_weight="1" />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="$28"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:gravity="end" />
     </LinearLayout>
 
     <!--the description that the user write it in the description

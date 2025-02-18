@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.activities.MainActivity;
+import lb.edu.ul.bikhedemtak.activities.BookingTaskActivity;
 import lb.edu.ul.bikhedemtak.databinding.ReviewConfirmFragmentBinding;
 import com.google.android.material.button.MaterialButton;
 
@@ -26,9 +25,22 @@ public class ReviewAndConfirmFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout using View Binding
         binding = ReviewConfirmFragmentBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        View view = binding.getRoot();
 
+        // Retrieve arguments
+        Bundle args = getArguments();
+        if (args != null) {
+            String bookingDate = args.getString("booking_date", "N/A");
+            String bookingTime = args.getString("booking_time", "N/A");
+
+            // Update TextViews
+            binding.bookingDate.setText(bookingDate);
+            binding.bookingTime.setText(bookingTime);
+        }
+
+        return view;
     }
 
     @Override
@@ -37,7 +49,7 @@ public class ReviewAndConfirmFragment extends Fragment {
 
         // Set the toolbar title
         if (getActivity() != null) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle("Task Details");
+            ((BookingTaskActivity) getActivity()).getSupportActionBar().setTitle("Task Details");
         }
 
 
