@@ -3,12 +3,10 @@ package lb.edu.ul.bikhedemtak.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,7 +22,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.activities.MainActivity;
+import lb.edu.ul.bikhedemtak.activities.BookingTaskActivity;
 
 /**
  * A BottomSheetDialogFragment that allows users to select a date and time.
@@ -70,8 +68,8 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
 
 //            Log.d("DateTimeBottomSheet", "selected date: " + date + " " + time);
 
-            // Create the intent to pass data back to MainActivity
-            Intent i = new Intent(getContext(), MainActivity.class);
+            // Create the intent to pass data back to BookingTaskActivity
+            Intent i = new Intent(getContext(), BookingTaskActivity.class);
             i.putExtra("tasker_id", taskerId); // Pass tasker_id as an integer
             i.putExtra("booking_time", date + " " + time); // Pass the combined date and time
             startActivity(i); // Start MainActivity with the passed data

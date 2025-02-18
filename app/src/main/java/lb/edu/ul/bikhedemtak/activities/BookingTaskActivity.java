@@ -10,19 +10,19 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.databinding.ActivityMainBinding;
+import lb.edu.ul.bikhedemtak.databinding.ActivityBookingTaskBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class BookingTaskActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
+    private ActivityBookingTaskBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityBookingTaskBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);

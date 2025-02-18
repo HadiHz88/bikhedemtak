@@ -11,10 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.fragment.NavHostFragment;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.activities.MainActivity;
+import lb.edu.ul.bikhedemtak.activities.BookingTaskActivity;
 import lb.edu.ul.bikhedemtak.databinding.ReviewConfirmFragmentBinding;
 import com.google.android.material.button.MaterialButton;
 
@@ -37,7 +36,7 @@ public class ReviewAndConfirmFragment extends Fragment {
 
         // Set the toolbar title
         if (getActivity() != null) {
-            ((MainActivity) getActivity()).getSupportActionBar().setTitle("Task Details");
+            ((BookingTaskActivity) getActivity()).getSupportActionBar().setTitle("Task Details");
         }
 
 
