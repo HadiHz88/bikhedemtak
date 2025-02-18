@@ -25,9 +25,22 @@ public class ReviewAndConfirmFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Inflate the layout using View Binding
         binding = ReviewConfirmFragmentBinding.inflate(inflater, container, false);
-        return binding.getRoot();
+        View view = binding.getRoot();
 
+        // Retrieve arguments
+        Bundle args = getArguments();
+        if (args != null) {
+            String bookingDate = args.getString("booking_date", "N/A");
+            String bookingTime = args.getString("booking_time", "N/A");
+
+            // Update TextViews
+            binding.bookingDate.setText(bookingDate);
+            binding.bookingTime.setText(bookingTime);
+        }
+
+        return view;
     }
 
     @Override
