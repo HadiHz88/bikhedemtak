@@ -7,7 +7,16 @@
         android:orientation="vertical"
         android:padding="10dp"
         android:layout_marginTop="80dp"
+        android:fitsSystemWindows="true"
         tools:context=".activities.ReviewAndConfirmActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="Review And Confirm"
+        app:titleTextColor="@android:color/holo_purple"/>
 
         <!-- Time, Date, and Profile Section -->
         <LinearLayout
@@ -237,7 +246,8 @@
         <TextView
             android:id="@+id/ParagED"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_height="100dp"
             android:layout_margin="10dp" />
 
         <!--this button will open a dialog message -->
