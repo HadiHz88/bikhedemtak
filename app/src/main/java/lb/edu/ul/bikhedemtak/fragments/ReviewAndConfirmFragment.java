@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.activities.BookingTaskActivity;
 import lb.edu.ul.bikhedemtak.databinding.ReviewConfirmFragmentBinding;
+
+import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 
 public class ReviewAndConfirmFragment extends Fragment {
@@ -29,6 +31,8 @@ public class ReviewAndConfirmFragment extends Fragment {
         binding = ReviewConfirmFragmentBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
+
+
         // Retrieve arguments
         Bundle args = getArguments();
         if (args != null) {
@@ -38,6 +42,7 @@ public class ReviewAndConfirmFragment extends Fragment {
             String totalRate = "$" + args.getString("hourly_rate", "N/A");
             String name = args.getString("name", "N/A");
             String profilePicture = args.getString("profile_picture", "N/A");
+            String userInput = args.getString("user_input", "N/A");
 
             // Update TextViews
             binding.bookingDate.setText(bookingDate);
@@ -46,6 +51,10 @@ public class ReviewAndConfirmFragment extends Fragment {
             binding.totalRate.setText(totalRate); //temp
             binding.UserName.setText(name);
             binding.ProfileImage.setTag(profilePicture);
+            Glide.with(this).load(profilePicture).into(binding.ProfileImage);
+
+            TextView reviewInput = binding.ParagED;
+            reviewInput.setText(userInput);
         }
 
         return view;

@@ -15,6 +15,7 @@ import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
 import lb.edu.ul.bikhedemtak.databinding.ActivityBookingTaskBinding;
 import lb.edu.ul.bikhedemtak.fragments.ReviewAndConfirmFragment;
+import lb.edu.ul.bikhedemtak.fragments.TaskDetailsFragment;
 
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -137,10 +138,10 @@ public class BookingTaskActivity extends AppCompatActivity {
 
 
     /**
-     * Pass data to ReviewAndConfirmFragment.
+     * Pass data to TaskDetailsFragment.
      */
     private void passDataToFragment(int taskerId, String name, String profilePicture, String hourlyRate, String bookingDate, String bookingTimeOnly) {
-        ReviewAndConfirmFragment fragment = new ReviewAndConfirmFragment();
+        TaskDetailsFragment fragment = new TaskDetailsFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("tasker_id", taskerId);
         bundle.putString("name", name);

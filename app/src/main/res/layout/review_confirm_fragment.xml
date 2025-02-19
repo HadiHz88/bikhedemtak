@@ -238,7 +238,6 @@
         android:id="@+id/ParagED"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Paragraph"
         android:layout_margin="10dp" />
 
     <!--this button will open a dialog message -->
