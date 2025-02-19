@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginTop="80dp"
+        tools:context=".activities.TaskDetailsActivity">
+
+        <!-- ImageView and Text Views Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="16dp">
+
+            <!-- Profile Image with round shape  -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ProfileImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="Profile Photo"
+                android:src="@drawable/img"
+                app:shapeAppearanceOverlay="@style/roundedImageView" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <!-- the first text view-->
+                <TextView
+                    android:id="@+id/textView_below_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/RightDescription"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_weight="4" />
+
+                <!-- the second text view-->
+
+                <TextView
+                    android:id="@+id/textView_right_of_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/BelowDescription"
+                    android:textSize="14sp"
+                    android:layout_weight="2" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- TextView under Image about the name of the user -->
+        <TextView
+            android:id="@+id/UserName"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="center" />
+
+        <!-- the text field where the user can write there own description  -->
+        <EditText
+            android:id="@+id/ParagED"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/tasKDetailsParag"
+            android:gravity="top"
+            android:padding="8dp" />
+
+        <!-- Button -->
+
+        <Button
+            android:id="@+id/Review_Task_Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ReviewTask"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:textSize="16dp"/>
+    </LinearLayout>

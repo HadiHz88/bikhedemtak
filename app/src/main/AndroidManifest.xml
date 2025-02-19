@@ -16,43 +16,44 @@
         android:theme="@style/Theme.Bikhedemtak"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".activities.TaskDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ReviewAndConfirmActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.BookingTaskActivity"
             android:exported="true"
             android:theme="@style/Theme.Bikhedemtak" />
-
         <activity
             android:name=".activities.LauncherActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".testing.TestActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.ViewAllReviewsActivity"
             android:exported="false"
             android:parentActivityName=".activities.TaskerProfileActivity" />
-
         <activity
             android:name=".activities.TaskerProfileActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.AuthActivity"
             android:exported="false" />
-
         <activity
             android:name=".activities.GetStartedActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

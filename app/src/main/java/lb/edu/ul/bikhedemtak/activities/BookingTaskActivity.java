@@ -2,77 +2,33 @@ package lb.edu.ul.bikhedemtak.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.api.ApiRequest;
-import lb.edu.ul.bikhedemtak.databinding.ActivityBookingTaskBinding;
-import lb.edu.ul.bikhedemtak.fragments.ReviewAndConfirmFragment;
-import lb.edu.ul.bikhedemtak.fragments.TaskDetailsFragment;
-
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
 import org.json.JSONObject;
 
+import lb.edu.ul.bikhedemtak.api.ApiRequest;
 
 public class BookingTaskActivity extends AppCompatActivity {
-
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityBookingTaskBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        binding = ActivityBookingTaskBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        setSupportActionBar(binding.toolbar);
-        Intent intent = getIntent();
-
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_task_details);
-
-        if(navHostFragment != null){
-        NavController navController = navHostFragment.getNavController();
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        }
         // Retrieve intent data
-
+        Intent intent = getIntent();
         if (intent != null) {
             int taskerId = intent.getIntExtra("tasker_id", -1);
             String bookingTime = intent.getStringExtra("booking_time");
 
-            String[] parts = null;
-            if (bookingTime != null) {
-                parts = bookingTime.split(" ");
-            }
+            String[] parts = bookingTime != null ? bookingTime.split(" ") : null;
+            String bookingDate = parts != null ? parts[0] : "";
+            String bookingTimeOnly = parts != null ? parts[1] : "";
 
-            String bookingDate = null;
-            String bookingTimeOnly = null;
-            if (parts != null) {
-                bookingDate = parts[0];
-                bookingTimeOnly = parts[1];
-            }
-
-
-            // Call API to get tasker details
-            getTaskerDetails(taskerId,bookingDate, bookingTimeOnly);
+            // Fetch tasker details
+            getTaskerDetails(taskerId, bookingDate, bookingTimeOnly);
         }
-
     }
 
     /**
@@ -91,8 +47,8 @@ public class BookingTaskActivity extends AppCompatActivity {
                     String profilePicture = data.optString("profile_picture", "");
                     String hourlyRate = String.valueOf(data.getInt("hourly_rate"));
 
-                    // Pass data to the fragment
-                    passDataToFragment(taskerId, name, profilePicture, hourlyRate, bookingDate, bookingTimeOnly);
+                    // Start TaskDetailsActivity with received data
+                    startTaskDetailsActivity(taskerId, name, profilePicture, hourlyRate, bookingDate, bookingTimeOnly);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -106,55 +62,17 @@ public class BookingTaskActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_task_details);
-        return NavigationUI.navigateUp(navController, appBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
-
     /**
-     * Update the UI with tasker details.
+     * Start TaskDetailsActivity with tasker details.
      */
-    private void updateUI(int taskerID ,String name, String profilePicture, String hourlyRate, String bookingDate, String bookingTime) {
-        // Set tasker's name
-        TextView userNameTextView = findViewById(R.id.UserName);
-        userNameTextView.setText(name);
-
-        // Set hourly rate
-        TextView hourlyRateTextView = findViewById(R.id.hourlyRate);
-        hourlyRateTextView.setText("Hourly Rate: $" + hourlyRate);
-
-        // Load profile picture using Glide
-        ImageView profileImageView = findViewById(R.id.ProfileImage);
-        Glide.with(this)
-                .load(profilePicture)
-                .placeholder(R.drawable.img)
-                .into(profileImageView);
-
-        // Pass data correctly to fragment
-        passDataToFragment(taskerID, name, profilePicture, hourlyRate, bookingDate, bookingTime);
+    private void startTaskDetailsActivity(int taskerId, String name, String profilePicture, String hourlyRate, String bookingDate, String bookingTime) {
+        Intent intent = new Intent(this, TaskDetailsActivity.class);
+        intent.putExtra("tasker_id", taskerId);
+        intent.putExtra("name", name);
+        intent.putExtra("profile_picture", profilePicture);
+        intent.putExtra("hourly_rate", hourlyRate);
+        intent.putExtra("booking_date", bookingDate);
+        intent.putExtra("booking_time", bookingTime);
+        startActivity(intent);
     }
-
-
-    /**
-     * Pass data to TaskDetailsFragment.
-     */
-    private void passDataToFragment(int taskerId, String name, String profilePicture, String hourlyRate, String bookingDate, String bookingTimeOnly) {
-        TaskDetailsFragment fragment = new TaskDetailsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt("tasker_id", taskerId);
-        bundle.putString("name", name);
-        bundle.putString("profile_picture", profilePicture);
-        bundle.putString("hourly_rate", hourlyRate);
-        bundle.putString("booking_date", bookingDate);
-        bundle.putString("booking_time", bookingTimeOnly);
-        fragment.setArguments(bundle);
-
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.nav_host_fragment_task_details, fragment)
-                .addToBackStack(null)
-                .commit();
-    }
-
 }
