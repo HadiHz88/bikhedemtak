@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="lb.edu.ul.bikhedemtak.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_task"
+        android:name="lb.edu.ul.bikhedemtak.TaskFragment"
+        android:label="@string/task"
+        tools:layout="@layout/fragment_task" />
+
+    <fragment
+        android:id="@+id/navigation_myTasker"
+        android:name="lb.edu.ul.bikhedemtak.MyTaskerFragment"
+        android:label="@string/myTasker"
+        tools:layout="@layout/fragment_mytasker" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="lb.edu.ul.bikhedemtak.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
+
+
+    <fragment
+        android:id="@+id/SearchResultFragment"
+        android:name="lb.edu.ul.bikhedemtak.search.SearchResultFragment"
+    tools:layout="@layout/fragment_search_results" />
+
+
+    <action
+        android:id="@+id/action_SearchResultFragment_to_navigation_home"
+        app:destination="@id/navigation_home" />
+</navigation>
