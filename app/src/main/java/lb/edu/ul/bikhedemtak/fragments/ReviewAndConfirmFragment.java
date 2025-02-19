@@ -34,10 +34,18 @@ public class ReviewAndConfirmFragment extends Fragment {
         if (args != null) {
             String bookingDate = args.getString("booking_date", "N/A");
             String bookingTime = args.getString("booking_time", "N/A");
+            String hourlyRate = "$" + args.getString("hourly_rate", "N/A") + "/hr";
+            String totalRate = "$" + args.getString("hourly_rate", "N/A");
+            String name = args.getString("name", "N/A");
+            String profilePicture = args.getString("profile_picture", "N/A");
 
             // Update TextViews
             binding.bookingDate.setText(bookingDate);
             binding.bookingTime.setText(bookingTime);
+            binding.hourlyRate.setText(hourlyRate);
+            binding.totalRate.setText(totalRate); //temp
+            binding.UserName.setText(name);
+            binding.ProfileImage.setTag(profilePicture);
         }
 
         return view;

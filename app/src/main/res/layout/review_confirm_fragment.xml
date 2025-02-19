@@ -96,7 +96,6 @@
                 android:id="@+id/UserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="John Doe"
                 android:textSize="14sp"
                 android:gravity="center" />
         </LinearLayout>
@@ -180,9 +179,9 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/hourlyRate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="$18/hr"
             android:textSize="15dp"
             android:layout_weight="1"
             android:gravity="end"
@@ -202,9 +201,9 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/totalRate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="$28"
             android:textSize="15dp"
             android:layout_weight="1"
             android:gravity="end"
