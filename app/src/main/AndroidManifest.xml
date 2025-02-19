@@ -56,8 +56,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.TaskInfoActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".activities.TaskInfoActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.TaskCompletedActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activities.FeedbackActivity"
+            android:exported="false" />
 
     </application>
 

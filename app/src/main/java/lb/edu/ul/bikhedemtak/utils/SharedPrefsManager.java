@@ -17,7 +17,7 @@ public class SharedPrefsManager {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putString(KEY_USER_ID, userData.optString("user_id"));
+        editor.putInt(KEY_USER_ID, userData.optInt("user_id")); // Save as int
         editor.putString(KEY_NAME, userData.optString("name"));
         editor.putString(KEY_EMAIL, userData.optString("email"));
         editor.putString(KEY_TOKEN, userData.optString("token"));
@@ -43,5 +43,10 @@ public class SharedPrefsManager {
     public static String getUserName(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return prefs.getString(KEY_NAME, "User");
+    }
+
+    public static int getUserId(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getInt(KEY_USER_ID, 0);
     }
 }

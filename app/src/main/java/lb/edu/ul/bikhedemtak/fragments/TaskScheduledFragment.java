@@ -33,5 +33,7 @@ public class TaskScheduledFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         scheduledRecView = view.findViewById(R.id.taskScheduledRecView);
+
+
     }
 }

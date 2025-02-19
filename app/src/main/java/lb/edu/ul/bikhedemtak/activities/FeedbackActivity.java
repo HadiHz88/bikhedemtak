@@ -3,6 +3,7 @@ package lb.edu.ul.bikhedemtak.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.api.ApiRequest;
+import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 
 public class FeedbackActivity extends AppCompatActivity {
@@ -35,6 +38,12 @@ public class FeedbackActivity extends AppCompatActivity {
     private boolean isSupportiveSelected = false;
     private boolean isSuperTaskerSelected = false;
     private boolean isFastWorkerSelected = false;
+
+
+
+    private String tasker_name;
+    private int tasker_id, task_id;
+    private int reviewer_id;
 
     // Volley RequestQueue
     private RequestQueue requestQueue;
@@ -55,11 +64,15 @@ public class FeedbackActivity extends AppCompatActivity {
         leaveFeedbackEd = findViewById(R.id.leaveFeedbackEd);
         submitFeedbackButton = findViewById(R.id.submitFeedbackButton);
 
+//        reviewer_id = SharedPrefsManager.getUserId(this);
+        reviewer_id = 2; // Replace with the actual reviewer ID
         // Retrieve the tasker name from the Intent
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("taskerName")) {
-            String taskerName = intent.getStringExtra("taskerName");
-            rateTaskerTv.setText("Rate " + taskerName); // Set the tasker name in the TextView
+        if (intent != null) {
+            tasker_name = intent.getStringExtra("tasker_name");
+            tasker_id = intent.getIntExtra("tasker_id", -1);
+            task_id = intent.getIntExtra("task_id", -1);
+            rateTaskerTv.setText("Rate " + tasker_name); // Set the tasker name in the TextView
         }
         // Initialize Volley RequestQueue
         requestQueue = Volley.newRequestQueue(this);
@@ -105,47 +118,61 @@ public class FeedbackActivity extends AppCompatActivity {
         float rating = taskerRatingBar.getRating();
 
         // Get the feedback text
-        String feedback = leaveFeedbackEd.getText().toString().trim();
+        String feedback = leaveFeedbackEd.getText().toString().trim() +
+                ". He was " + (isFriendlySelected ? "friendly, " : "") +
+                (isSupportiveSelected ? "supportive, " : "") +
+                (isSuperTaskerSelected ? "a super tasker, " : "") +
+                (isFastWorkerSelected ? "a fast worker, " : "");
 
-        // Prepare selected buttons data
-        JSONObject selectedButtons = new JSONObject();
+        // Remove the last comma and space
+        feedback = feedback.substring(0, feedback.length() - 2);
+
+        String postReviewEndpoint = "postReview.php";
+
+        JSONObject reviewParams = new JSONObject();
         try {
-            selectedButtons.put("friendly", isFriendlySelected);
-            selectedButtons.put("supportive", isSupportiveSelected);
-            selectedButtons.put("superTasker", isSuperTaskerSelected);
-            selectedButtons.put("fastWorker", isFastWorkerSelected);
+            reviewParams.put("task_id", task_id);
+            reviewParams.put("reviewer_id", reviewer_id); // Replace with the actual reviewer ID
+            reviewParams.put("tasker_id", tasker_id);
+            reviewParams.put("rating", rating);
+            reviewParams.put("review_content", feedback);
+
+            Log.d("test", "task_id: " + task_id);
+            Log.d("test", "reviewer_id: " + reviewer_id);
+            Log.d("test", "tasker_id: " + tasker_id);
+            Log.d("test", "rating: " + rating);
+            Log.d("test", "review_content: " + feedback);
+
+            // Make a POST request to submit the feedback
+            ApiRequest.getInstance().makePostRequest(this, postReviewEndpoint, reviewParams, new ApiRequest.ResponseListener<JSONObject>() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    try {
+                        if (response.getString("status").equals("success")) {
+                            Toast.makeText(FeedbackActivity.this, "Feedback submitted successfully", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(FeedbackActivity.this, "Failed to submit feedback", Toast.LENGTH_SHORT).show();
+                            resetForm();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {
+
+                }
+            });
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        // Create a JSON object to send to the server
-        JSONObject feedbackData = new JSONObject();
-        try {
-            feedbackData.put("rating", rating);
-            feedbackData.put("feedback", feedback);
-            feedbackData.put("selectedButtons", selectedButtons);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        // Replace with the actual API URL
-        String url = "https://your-api-url.com/submit-feedback";
 
-        // Send feedback data to the server using Volley
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, feedbackData,
-                response -> {
-                    // Handle successful submission
-                    Toast.makeText(FeedbackActivity.this, "Feedback submitted successfully!", Toast.LENGTH_SHORT).show();
-                    resetForm();
-                },
-                error -> {
-                    // Handle error
-                    Toast.makeText(FeedbackActivity.this, "Failed to submit feedback. Please try again.", Toast.LENGTH_SHORT).show();
-                    error.printStackTrace();
-                });
-
-        // Add the request to the RequestQueue
-        requestQueue.add(jsonObjectRequest);
     }
 
     // Method to reset the form after submission

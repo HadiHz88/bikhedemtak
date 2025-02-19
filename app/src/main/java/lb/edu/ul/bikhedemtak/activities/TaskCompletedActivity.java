@@ -12,8 +12,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.api.ApiRequest;
 
 
 public class TaskCompletedActivity extends AppCompatActivity {
@@ -23,11 +25,15 @@ public class TaskCompletedActivity extends AppCompatActivity {
     private ImageView taskerProfilePic;
     private Button rateAndTipsButton;
     private RequestQueue requestQueue;
+    int tasker_id, task_id;
+    String tasker_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_completed); // Replace with your layout file name
+        setContentView(R.layout.activity_task_completed);
+
+        task_id = getIntent().getIntExtra("task_id", 1);
 
         // Initialize TextViews
         taskerNameTv = findViewById(R.id.taskerNameTv);
@@ -37,63 +43,67 @@ public class TaskCompletedActivity extends AppCompatActivity {
         hourlyPriceTv = findViewById(R.id.hourlyPriceTv);
         supportFeePriceTv = findViewById(R.id.supportFeePriceTv);
         totalRatePriceTv = findViewById(R.id.totalRatePriceTv);
-        locationTaskerTv = findViewById(R.id.locationTaskerTv);
+        locationTaskerTv = findViewById(R.id.totalRatePriceTv);
         taskerNotesTv = findViewById(R.id.taskerNotesTv);
 
         // Initialize ImageView
         taskerProfilePic = findViewById(R.id.taskerProfilePic);
 
-        // Initialize Button
+        // Initialize Buttons
         rateAndTipsButton = findViewById(R.id.rateAndTipsButton);
 
-        // Set click listener for the "Rate and Tips" button
         rateAndTipsButton.setOnClickListener(v -> {
-            // Navigate to the FeedbackActivity
             Intent intent = new Intent(TaskCompletedActivity.this, FeedbackActivity.class);
-            intent.putExtra("taskerName", taskerNameTv.getText().toString()); // Pass the tasker name
+            intent.putExtra("tasker_id", tasker_id);
+            intent.putExtra("tasker_name", tasker_name);
+            intent.putExtra("task_id", task_id);
             startActivity(intent);
         });
 
-        // Initialize Volley RequestQueue
-        requestQueue = Volley.newRequestQueue(this);
+        int task_id = 1; // sample
 
-        // Fetch data from the database
-        fetchTaskCompletedInfo();
-    }
+        // int task_id = Integer.parseInt(String.valueOf(getIntent().getIntExtra("tasker_id", 0)));
 
-    private void fetchTaskCompletedInfo() {
-        // Replace with your actual API URL
-        String url = "https://your-api-url.com/task-completed-info";
+        String getTaskInfoEndpoint = "getTaskInfo.php?task_id=" + task_id;
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        // Parse the JSON response and update the TextViews
-                        taskerNameTv.setText(response.getString("taskerName"));
-                        statusInfoTv.setText(response.getString("taskerStatus"));
-                        bookingDateTv.setText(response.getString("bookingDate"));
-                        bookingTimeTv.setText(response.getString("bookingTime"));
-                        hourlyPriceTv.setText(response.getString("hourlyPrice"));
-                        supportFeePriceTv.setText(response.getString("supportFee"));
-                        totalRatePriceTv.setText(response.getString("totalRate"));
-                        locationTaskerTv.setText(response.getString("location"));
-                        taskerNotesTv.setText(response.getString("taskNotes"));
+        ApiRequest.getInstance().makeGetObjectRequest(this, getTaskInfoEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if (response.getString("status").equals("success")) {
+                        JSONObject taskInfo = response.getJSONObject("data");
 
-                        // Load the profile picture using a library like Glide or Picasso
-                        // Example with Glide:
-                        // Glide.with(this).load(response.getString("profilePictureUrl")).into(taskerProfilePic);
+                        tasker_name = taskInfo.getString("tasker_name");
+                        tasker_id = taskInfo.getInt("tasker_id");
+                        boolean taskerStatus = taskInfo.getBoolean("tasker_availability_status");
+                        String tasker_picture = taskInfo.getString("tasker_profile_picture");
+                        String dateTimeBooking = taskInfo.getString("booking_time");
+                        String [] parts = dateTimeBooking.split(" ");
+                        String dateBooking = parts[0];
+                        String timeBooking = parts[1];
+                        String TaskPricePerHour = taskInfo.getString("tasker_rate");
+                        String taskDescription = taskInfo.getString("task_description");
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        taskerNameTv.setText(tasker_name);
+                        statusInfoTv.setText(taskerStatus ? "Available" : "Not Available");
+                        bookingDateTv.setText(dateBooking);
+                        bookingTimeTv.setText(timeBooking);
+                        hourlyPriceTv.setText(TaskPricePerHour);
+                        taskerNotesTv.setText(taskDescription);
+
                     }
-                },
-                error -> {
-                    // Handle the error
-                    error.printStackTrace();
-                    Toast.makeText(TaskCompletedActivity.this, "Failed to fetch task details", Toast.LENGTH_SHORT).show();
-                });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
-        // Add the request to the RequestQueue
-        requestQueue.add(jsonObjectRequest);
+            @Override
+            public void onFailure(String error) {
+                // Handle error
+                Toast.makeText(TaskCompletedActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 }
