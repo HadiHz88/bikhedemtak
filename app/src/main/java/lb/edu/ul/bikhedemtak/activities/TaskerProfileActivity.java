@@ -13,6 +13,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -42,9 +43,11 @@ public class TaskerProfileActivity extends AppCompatActivity {
     private MaterialToolbar toolbar;
 
     private ImageView taskerProfilePicture;
-    private TextView taskerName, taskerSkill, taskerRating, taskerAvailability, taskerDescription, taskerHourlyRate;
+    private TextView taskerName, taskerSkill, taskerRating, taskerAvailability, taskerDescription, taskerHourlyRate, taskerProjectsCount;
     private RatingBar taskerRatingBar;
     List<Review> allReviews;
+
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,12 @@ public class TaskerProfileActivity extends AppCompatActivity {
         // Set up button click listeners
         selectTasker.setOnClickListener(v -> openDateTimePicker());
         viewAllReviews.setOnClickListener(v -> openViewAllReviewsActivity());
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            fetchTaskerDetails();
+            setupRecyclerView();
+            swipeRefreshLayout.setRefreshing(false);
+        });
     }
 
     /**
@@ -77,6 +86,9 @@ public class TaskerProfileActivity extends AppCompatActivity {
         taskerDescription = findViewById(R.id.tvTaskerDescription);
         taskerProfilePicture = findViewById(R.id.ivTaskerProfilePic);
         taskerHourlyRate = findViewById(R.id.tvTaskerHourlyRate);
+        taskerProjectsCount = findViewById(R.id.tvTaskerProjects);
+
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
     }
 
     /**
@@ -111,8 +123,9 @@ public class TaskerProfileActivity extends AppCompatActivity {
                     String rating = String.valueOf(data.getInt("rating"));
                     String description = data.getString("description");
                     String hourlyRate = String.valueOf(data.getInt("hourly_rate"));
+                    String projectsCount = data.optString("completed_tasks_count", "0");
 
-                    updateTaskerDetails(name, profilePicture, skill, availabilityStatus, rating, description, hourlyRate);
+                    updateTaskerDetails(name, profilePicture, skill, availabilityStatus, rating, description, hourlyRate, projectsCount);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -128,13 +141,14 @@ public class TaskerProfileActivity extends AppCompatActivity {
     /**
      * Update the tasker details in the UI.
      */
-    private void updateTaskerDetails(String name, String profilePicture, String skill, String availabilityStatus, String rating, String description, String hourlyRate) {
+    private void updateTaskerDetails(String name, String profilePicture, String skill, String availabilityStatus, String rating, String description, String hourlyRate, String projectsCount) {
         taskerName.setText(name);
         taskerSkill.setText(skill);
         taskerRating.setText(rating);
         taskerRatingBar.setRating(Float.parseFloat(rating));
         taskerDescription.setText(description);
         taskerHourlyRate.setText("$" + hourlyRate + "/hr");
+        taskerProjectsCount.setText(projectsCount);
 
         if (profilePicture.isEmpty()) {
             Glide.with(this).load(R.drawable.default_pp).into(taskerProfilePicture);

@@ -31,7 +31,7 @@ public class LauncherActivity extends AppCompatActivity {
 //            startActivity(new Intent(this, AuthActivity.class));
 //        }
 
-        startActivity(new Intent(this, TaskInfoActivity.class));
+        startActivity(new Intent(this, TaskerProfileActivity.class));
 
         // Finish the current activity
     }
