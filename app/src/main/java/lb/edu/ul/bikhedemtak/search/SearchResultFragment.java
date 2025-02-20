@@ -37,7 +37,6 @@ import lb.edu.ul.bikhedemtak.api.ApiRequest;
 
 public class SearchResultFragment extends Fragment {
     private SearchView searchView;
-    private MaterialToolbar toolbar;
     private Spinner categorySpinner;
     private SeekBar hourlyRateSeekBar;
     private TextView hourlyRateTextView;
@@ -77,7 +76,6 @@ public class SearchResultFragment extends Fragment {
     }
 
     private void initializeViews(View view) {
-        toolbar = view.findViewById(R.id.SearchResultToolbar);
         searchView = view.findViewById(R.id.searchView_Result);
         categorySpinner = view.findViewById(R.id.categorySpinner);
         hourlyRateSeekBar = view.findViewById(R.id.hourlyRateSeekBar);
@@ -85,18 +83,7 @@ public class SearchResultFragment extends Fragment {
         searchResultsRecyclerView = view.findViewById(R.id.recyclerView_Result);
     }
 
-    private void setupToolbar() {
-        ((AppCompatActivity) requireActivity()).setSupportActionBar(toolbar);
-        if (((AppCompatActivity) requireActivity()).getSupportActionBar() != null) {
-            ((AppCompatActivity) requireActivity()).getSupportActionBar().setTitle("Search");
-        }
 
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_homepage);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home)
-                .build();
-        NavigationUI.setupActionBarWithNavController((AppCompatActivity) requireActivity(), navController, appBarConfiguration);
-    }
 
     private void setupRecyclerView() {
         searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
