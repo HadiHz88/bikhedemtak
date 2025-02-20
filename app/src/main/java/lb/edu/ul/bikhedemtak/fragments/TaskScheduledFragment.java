@@ -66,9 +66,13 @@ public class TaskScheduledFragment extends Fragment {
 
                             allScheduledTasks.add(new Task(id, date, time, taskerProfilePic, false, taskerName));
                         }
-
                         scheduledAdapter = new TasksListAdapter(allScheduledTasks);
                         scheduledRecView.setAdapter(scheduledAdapter);
+
+                        if (allScheduledTasks.isEmpty()) {
+                            view.findViewById(R.id.noTask).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.taskScheduledRecView).setVisibility(View.GONE);
+                        }
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

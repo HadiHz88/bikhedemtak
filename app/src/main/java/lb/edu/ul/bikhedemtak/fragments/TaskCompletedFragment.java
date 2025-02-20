@@ -69,6 +69,11 @@ public class TaskCompletedFragment extends Fragment {
 
                         completedAdapter = new TasksListAdapter(allCompletedTasks);
                         completedRecView.setAdapter(completedAdapter);
+
+                        if (allCompletedTasks.isEmpty()) {
+                            view.findViewById(R.id.noTask).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.taskCompletedRecView).setVisibility(View.GONE);
+                        }
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);

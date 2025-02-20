@@ -8,4 +8,31 @@
     <style name="CustomCurvedCorners" parent="">
         <item name="cornerSize">16dp</item> <!-- Adjust the dp value to control curve radius -->
     </style>
+
+    <style name="MyTaskCustomNavigation" parent="Widget.MaterialComponents.BottomNavigationView">
+        <!-- Remove icons -->
+        <item name="itemIconTint">@null</item>
+
+        <!-- Customize text appearance -->
+        <item name="itemTextAppearanceActive">@style/MyTaskCustomNavigationTextActive</item>
+        <item name="itemTextAppearanceInactive">@style/MyTaskCustomNavigationTextInactive</item>
+
+        <!-- Change background color -->
+        <item name="android:background">#00000000</item>
+
+        <!-- Add an underline for the selected item -->
+        <item name="itemBackground">@drawable/bottom_nav_selector</item>
+    </style>
+
+
+    <style name="MyTaskCustomNavigationTextActive">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dark_blue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyTaskCustomNavigationTextInactive">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/sky_blue</item>
+    </style>
 </resources>

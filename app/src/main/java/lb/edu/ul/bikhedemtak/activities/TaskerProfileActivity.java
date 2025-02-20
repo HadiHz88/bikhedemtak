@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -46,7 +45,8 @@ public class TaskerProfileActivity extends AppCompatActivity {
     private ImageView taskerProfilePicture;
     private TextView taskerName, taskerSkill, taskerRating, taskerAvailability, taskerDescription, taskerHourlyRate, taskerProjectsCount;
     private RatingBar taskerRatingBar;
-    List<Review> allReviews;
+    List<Review> allReviews = new ArrayList<>();
+    boolean isDataLoaded = false;
 
     private int tasker_id;
 
@@ -253,7 +253,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
      */
     private void openViewAllReviewsActivity() {
         Intent intent = new Intent(TaskerProfileActivity.this, ViewAllReviewsActivity.class);
-        intent.putExtra("reviews_list", new ArrayList<>(allReviews));
+        intent.putExtra("reviews_list", (ArrayList<Review>) allReviews);
         startActivity(intent);
     }
 }
