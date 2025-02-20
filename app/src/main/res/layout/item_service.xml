@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imageViewServiceIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:contentDescription="Profile Photo"
+        android:src="@drawable/job_icon"
+        app:shapeAppearanceOverlay="@style/roundedImageView" />
+    <TextView
+        android:id="@+id/textViewServiceName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textSize="14sp" />
+</LinearLayout>
