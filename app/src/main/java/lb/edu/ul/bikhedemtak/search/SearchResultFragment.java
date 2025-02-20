@@ -57,7 +57,6 @@ public class SearchResultFragment extends Fragment {
 
         // Initialize views
         initializeViews(view);
-        setupToolbar();
         setupRecyclerView();
         setupHourlyRateSeekBar();
         setupSearchView();
