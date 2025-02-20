@@ -21,6 +21,7 @@ import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.TasksListAdapter;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
 import lb.edu.ul.bikhedemtak.models.Task;
+import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 public class TaskScheduledFragment extends Fragment {
     private RecyclerView scheduledRecView;
@@ -41,7 +42,9 @@ public class TaskScheduledFragment extends Fragment {
 
         scheduledRecView = view.findViewById(R.id.taskScheduledRecView);
 
-        String endpoint = "getScheduledTasks.php?user_id=" + 2;
+        int userId = SharedPrefsManager.getUserId(getContext());
+
+        String endpoint = "getScheduledTasks.php?requester_id=" + userId;
 
         ApiRequest.getInstance().makeGetObjectRequest(getContext(), endpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override

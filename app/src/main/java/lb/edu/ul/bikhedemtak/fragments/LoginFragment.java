@@ -21,6 +21,7 @@ package lb.edu.ul.bikhedemtak.fragments;
     import lb.edu.ul.bikhedemtak.R;
     import lb.edu.ul.bikhedemtak.activities.AuthActivity;
     import lb.edu.ul.bikhedemtak.api.ApiRequest;
+    import lb.edu.ul.bikhedemtak.homepageActivity;
     import lb.edu.ul.bikhedemtak.testing.TestActivity;
     import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
@@ -128,7 +129,7 @@ package lb.edu.ul.bikhedemtak.fragments;
                                         SharedPrefsManager.saveUserData(requireContext(), userData);
 
                                         requireActivity().finish();
-                                        startActivity(new Intent(requireContext(), TestActivity.class));
+                                        startActivity(new Intent(requireContext(), homepageActivity.class));
                                     } else {
                                         showError(response.optString("message", "Login failed"));
                                     }

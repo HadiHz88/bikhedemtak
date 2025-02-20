@@ -24,16 +24,16 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Check if the user is logged in using SharedPrefsManager
-//        if (SharedPrefsManager.isLoggedIn(this)) {
-//            // If logged in, start TestActivity
-//            startActivity(new Intent(this, TestActivity.class));
-//        } else {
-//            // If not logged in, start AuthActivity
-//            startActivity(new Intent(this, AuthActivity.class));
-//        }
+//         Check if the user is logged in using SharedPrefsManager
+        if (SharedPrefsManager.isLoggedIn(this)) {
+            // If logged in, start TestActivity
+            startActivity(new Intent(this, homepageActivity.class));
+        } else {
+            // If not logged in, start AuthActivity
+            startActivity(new Intent(this, AuthActivity.class));
+        }
 
-        startActivity(new Intent(this, homepageActivity.class));
+//        startActivity(new Intent(this, GetStartedActivity.class));
 
         // Finish the current activity
     }
