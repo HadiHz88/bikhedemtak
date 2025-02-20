@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:queryHint="Search for taskers..."
                 android:iconifiedByDefault="false"
-                app:queryBackground="@color/light_pink"/>
+                android:background="@drawable/search_view_bg"/>
 
             <!-- Category Filter -->
             <Spinner
@@ -50,7 +50,10 @@
                 android:id="@+id/hourlyRateSeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:max="100" />
+                android:progressTint="#FFC0CB"
+                android:thumbTint="#FFC0CB"
+                android:max="100"
+                 />
         </LinearLayout>
 
         <ScrollView
