@@ -28,6 +28,7 @@ import lb.edu.ul.bikhedemtak.Carousel.CarouselAdapter;
 import lb.edu.ul.bikhedemtak.Carousel.CarouselItem;
 import lb.edu.ul.bikhedemtak.MostBookedFeatured.FeatureService;
 import lb.edu.ul.bikhedemtak.MostBookedFeatured.FeatureServiceAdapter;
+import lb.edu.ul.bikhedemtak.activities.AllServicesActivity;
 import lb.edu.ul.bikhedemtak.recommendedsection.SecondSquareAdapter;
 import lb.edu.ul.bikhedemtak.recommendedsection.SecondSquareItem;
 import lb.edu.ul.bikhedemtak.SquareCategories.SquareAdapter;
@@ -80,8 +81,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create an Intent to navigate to the desired Activity
-//                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -93,8 +94,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create an Intent to navigate to the desired Activity
-//                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
+                startActivity(intent);
             }
         });
 

@@ -1,6 +1,7 @@
 package lb.edu.ul.bikhedemtak.adapters;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.models.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder> {
@@ -20,7 +22,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
     private List<Service> serviceList;
 
     public ServiceAdapter(List<Service> serviceList) {
-        this.serviceList = serviceList;
+        this.serviceList = serviceList != null ? serviceList : new ArrayList<>();
     }
 
     @NonNull
@@ -33,6 +35,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceV
     @Override
     public void onBindViewHolder(@NonNull ServiceViewHolder holder, int position) {
         Service service = serviceList.get(position);
+        Log.d("RecyclerView", "Binding service: " + service.getServiceName());
 
         // Set service name correctly
         holder.textViewServiceName.setText(service.getServiceName());
