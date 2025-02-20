@@ -158,34 +158,33 @@ public class HomeFragment extends Fragment {
         String limit = "5";
         String endpoint = "getFeaturedCategories.php?limit=" + limit;
 
-
-        ApiRequest.getInstance().makeGetArrayRequest(
+        ApiRequest.getInstance().makeGetObjectRequest(
                 getContext(),
                 endpoint,
-                new ApiRequest.ResponseListener<JSONArray>() {
+                new ApiRequest.ResponseListener<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray response) {
-
+                    public void onSuccess(JSONObject response) {
                         try {
+                            // Check if the API call was successful
+                            if (response.getString("status").equals("success")) {
+                                JSONArray categoriesArray = response.getJSONArray("data"); // Extract the "data" array
 
-                            Log.d("HomepageActivity", "API Response: " + response.toString());
+                                List<SquareItem> squareItems = new ArrayList<>();
+                                for (int i = 0; i < categoriesArray.length(); i++) {
+                                    JSONObject categoryObject = categoriesArray.getJSONObject(i);
+                                    int categoryId = categoryObject.getInt("category_id");
+                                    String categoryName = categoryObject.getString("category_name");
 
-                            if (response.length() == 0) {
-                                Log.e("HomepageActivity", "API returned an empty array!");
+                                    int iconResId = getIconForCategory(categoryName); // Dynamically set icon based on category
+                                    squareItems.add(new SquareItem(categoryId, iconResId, categoryName));
+                                }
+
+                                // Update the adapter and set it to the RecyclerView (or ListView)
+                                squareAdapter = new SquareAdapter(squareItems);
+                                horizontalSquaresList.setAdapter(squareAdapter);
+                            } else {
+                                Log.e("HomepageActivity", "API returned success=false");
                             }
-                            List<SquareItem> squareItems = new ArrayList<>();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject itemObject = response.getJSONObject(i);
-                                Log.d("HomepageActivity", "Category JSON: " + itemObject.toString());
-                                int categoryId = itemObject.getInt("category_id");
-                                String categoryName = itemObject.getString("category_name");
-                                int iconResId = getIconForCategory(categoryName); // Dynamically set icon based on category
-                                squareItems.add(new SquareItem(categoryId, iconResId, categoryName));
-                            }
-                            squareAdapter = new SquareAdapter(squareItems);
-                            horizontalSquaresList.setAdapter(squareAdapter);
-
-
                         } catch (JSONException e) {
                             Log.e("HomepageActivity", "JSON Parsing Error: ", e);
                         }
