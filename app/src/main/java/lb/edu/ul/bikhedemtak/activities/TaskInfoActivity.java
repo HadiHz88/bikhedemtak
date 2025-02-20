@@ -1,14 +1,14 @@
 package lb.edu.ul.bikhedemtak.activities;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.RequestQueue;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,9 +19,9 @@ import lb.edu.ul.bikhedemtak.api.ApiRequest;
 
 public class TaskInfoActivity extends AppCompatActivity {
 
-    private TextView taskerNameBookedTv, taskerStatusInfoTv, dateBookingTv, timeBookingTv, pricePerHourTv, supportFeeTv, totalRateTv, locationTv, taskNotesTv;
+    private MaterialTextView taskerNameBookedTv, taskerStatusInfoTv, dateBookingTv, timeBookingTv, pricePerHourTv, supportFeeTv, totalRateTv, taskNotesTv;
     private ImageView taskerProfilePicture;
-    private Button findNewTaskerButton, cancelTaskButton;
+    private MaterialButton findNewTaskerButton;
     private RequestQueue requestQueue;
 
     @Override
@@ -37,7 +37,6 @@ public class TaskInfoActivity extends AppCompatActivity {
         pricePerHourTv = findViewById(R.id.pricePerHourTv);
         supportFeeTv = findViewById(R.id.supportFeeTv);
         totalRateTv = findViewById(R.id.totalRateTv);
-        locationTv = findViewById(R.id.locationTv);
         taskNotesTv = findViewById(R.id.taskNotesTv);
 
         // Initialize ImageView
@@ -45,7 +44,6 @@ public class TaskInfoActivity extends AppCompatActivity {
 
         // Initialize Buttons
         findNewTaskerButton = findViewById(R.id.findNewTaskerButton);
-        cancelTaskButton = findViewById(R.id.cancelTaskButton);
 
         int task_id = 1; // sample
 
@@ -64,18 +62,19 @@ public class TaskInfoActivity extends AppCompatActivity {
                         boolean taskerStatus = taskInfo.getBoolean("tasker_availability_status");
                         String tasker_picture = taskInfo.getString("tasker_profile_picture");
                         String dateTimeBooking = taskInfo.getString("booking_time");
-                        String [] parts = dateTimeBooking.split(" ");
+                        String[] parts = dateTimeBooking.split(" ");
                         String dateBooking = parts[0];
                         String timeBooking = parts[1];
-                        String TaskPricePerHour = taskInfo.getString("tasker_rate");
+                        int TaskPricePerHour = taskInfo.getInt("tasker_rate");
                         String taskDescription = taskInfo.getString("task_description");
 
                         taskerNameBookedTv.setText(taskerName);
                         taskerStatusInfoTv.setText(taskerStatus ? "Available" : "Not Available");
                         dateBookingTv.setText(dateBooking);
                         timeBookingTv.setText(timeBooking);
-                        pricePerHourTv.setText(TaskPricePerHour);
+                        pricePerHourTv.setText("$" + TaskPricePerHour + "/hr");
                         taskNotesTv.setText(taskDescription);
+                        totalRateTv.setText(TaskPricePerHour + 3);
 
                     }
                 } catch (JSONException e) {
@@ -97,13 +96,6 @@ public class TaskInfoActivity extends AppCompatActivity {
             Toast.makeText(TaskInfoActivity.this, "Find A New Tasker Clicked", Toast.LENGTH_SHORT).show();
             // Add your logic here, e.g., navigate to a new activity or fetch a new tasker
             // startActivity(new Intent(TaskInfoActivity.this, SearchTasker.class));
-        });
-
-        cancelTaskButton.setOnClickListener(v -> {
-            // Handle "Cancel Task" button click
-            // Toast.makeText(TaskInfoActivity.this, "Cancel Task Clicked", Toast.LENGTH_SHORT).show();
-            // Intent cancelTaskIntent = new Intent(TaskInfoActivity.this, TaskerProfileActivity.class);
-            // cancelTaskIntent.putExtra("tasker_id", );
         });
     }
 

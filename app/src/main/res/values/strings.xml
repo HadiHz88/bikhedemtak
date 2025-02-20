@@ -199,7 +199,7 @@
     <string name="hour_text">9:30 am</string>
 
     <string name="pricePerHour_text">$18/hr</string>
-    <string name="supportFee_text">$10</string>
+    <string name="supportFee_text">$3</string>
     <string name="totalRate_text">$28</string>
 
     <string name="location_text">San Francisco, CA</string>

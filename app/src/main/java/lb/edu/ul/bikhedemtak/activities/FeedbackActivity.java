@@ -15,6 +15,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,11 +31,11 @@ public class FeedbackActivity extends AppCompatActivity {
 
     // Declare views
     private ImageView taskerImg;
-    private TextView rateTaskerTv;
+    private TextView rateTaskerTv, feedbackLabel;
     private RatingBar taskerRatingBar;
     private Button friendlyButton, supportiveButton, superTaskerButton, fastWorkerButton;
-    private EditText leaveFeedbackEd;
-    private Button submitFeedbackButton;
+    private TextInputEditText leaveFeedbackEd;
+    private MaterialButton submitFeedbackButton;
 
     // Variables to store selected buttons
     private boolean isFriendlySelected = false;
@@ -63,6 +67,7 @@ public class FeedbackActivity extends AppCompatActivity {
         fastWorkerButton = findViewById(R.id.fastWorkerButton);
         leaveFeedbackEd = findViewById(R.id.leaveFeedbackEd);
         submitFeedbackButton = findViewById(R.id.submitFeedbackButton);
+        feedbackLabel = findViewById(R.id.feedbackLabel);
 
 //        reviewer_id = SharedPrefsManager.getUserId(this);
         reviewer_id = 2; // Replace with the actual reviewer ID
@@ -73,6 +78,7 @@ public class FeedbackActivity extends AppCompatActivity {
             tasker_id = intent.getIntExtra("tasker_id", -1);
             task_id = intent.getIntExtra("task_id", -1);
             rateTaskerTv.setText("Rate " + tasker_name); // Set the tasker name in the TextView
+            feedbackLabel.setText("What Did You Like About " + tasker_name); // Set the tasker name in the TextView
         }
         // Initialize Volley RequestQueue
         requestQueue = Volley.newRequestQueue(this);

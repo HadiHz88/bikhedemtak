@@ -2,15 +2,12 @@ package lb.edu.ul.bikhedemtak.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,10 +18,9 @@ import lb.edu.ul.bikhedemtak.api.ApiRequest;
 public class TaskCompletedActivity extends AppCompatActivity {
 
     // Declare TextViews, ImageView, and Button
-    private TextView taskerNameTv, statusInfoTv, bookingDateTv, bookingTimeTv, hourlyPriceTv, supportFeePriceTv, totalRatePriceTv, locationTaskerTv, taskerNotesTv;
+    private MaterialTextView taskerNameTv, statusInfoTv, bookingDateTv, bookingTimeTv, hourlyPriceTv, supportFeePriceTv, totalRatePriceTv, taskerNotesTv;
     private ImageView taskerProfilePic;
-    private Button rateAndTipsButton;
-    private RequestQueue requestQueue;
+    private MaterialButton rateAndTipsButton;
     int tasker_id, task_id;
     String tasker_name;
 
@@ -43,7 +39,6 @@ public class TaskCompletedActivity extends AppCompatActivity {
         hourlyPriceTv = findViewById(R.id.hourlyPriceTv);
         supportFeePriceTv = findViewById(R.id.supportFeePriceTv);
         totalRatePriceTv = findViewById(R.id.totalRatePriceTv);
-        locationTaskerTv = findViewById(R.id.totalRatePriceTv);
         taskerNotesTv = findViewById(R.id.taskerNotesTv);
 
         // Initialize ImageView
@@ -81,15 +76,16 @@ public class TaskCompletedActivity extends AppCompatActivity {
                         String [] parts = dateTimeBooking.split(" ");
                         String dateBooking = parts[0];
                         String timeBooking = parts[1];
-                        String TaskPricePerHour = taskInfo.getString("tasker_rate");
+                        int TaskPricePerHour = taskInfo.getInt("tasker_rate");
                         String taskDescription = taskInfo.getString("task_description");
 
                         taskerNameTv.setText(tasker_name);
                         statusInfoTv.setText(taskerStatus ? "Available" : "Not Available");
                         bookingDateTv.setText(dateBooking);
                         bookingTimeTv.setText(timeBooking);
-                        hourlyPriceTv.setText(TaskPricePerHour);
+                        hourlyPriceTv.setText("$" + TaskPricePerHour + "/hr");
                         taskerNotesTv.setText(taskDescription);
+                        totalRatePriceTv.setText(TaskPricePerHour + 3);
 
                     }
                 } catch (JSONException e) {

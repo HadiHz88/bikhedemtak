@@ -18,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.button.MaterialButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,7 +38,7 @@ import lb.edu.ul.bikhedemtak.ui.DateTimeBottomSheet;
 public class TaskerProfileActivity extends AppCompatActivity {
 
     private BottomSheetBehavior<View> bottomSheetBehavior;
-    private Button selectTasker, viewAllReviews;
+    private MaterialButton selectTasker, viewAllReviews;
     private RecyclerView reviewsRecyclerView;
     private ReviewAdapter reviewAdapter;
     private MaterialToolbar toolbar;
