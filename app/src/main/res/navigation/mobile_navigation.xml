@@ -9,7 +9,10 @@
         android:id="@+id/navigation_home"
         android:name="lb.edu.ul.bikhedemtak.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+    <action
+        android:id="@+id/action_navigation_home_to_SearchResultFragment"
+        app:destination="@id/SearchResultFragment" /></fragment>
 
     <fragment
         android:id="@+id/navigation_task"
@@ -32,10 +35,8 @@
     <fragment
         android:id="@+id/SearchResultFragment"
         android:name="lb.edu.ul.bikhedemtak.search.SearchResultFragment"
-    tools:layout="@layout/fragment_search_results" />
+        android:label="Search Results"
+        tools:layout="@layout/fragment_search_results" />
 
 
-    <action
-        android:id="@+id/action_SearchResultFragment_to_navigation_home"
-        app:destination="@id/navigation_home" />
 </navigation>

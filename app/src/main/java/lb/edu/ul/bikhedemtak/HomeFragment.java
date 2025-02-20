@@ -125,7 +125,7 @@ public class HomeFragment extends Fragment {
                 Bundle args = new Bundle();
                 args.putString("search", query); // Corrected this line
                 NavHostFragment.findNavController(HomeFragment.this)
-                        .navigate(R.id.action_SearchResultFragment_to_navigation_home, args); // Pass args here
+                        .navigate(R.id.action_navigation_home_to_SearchResultFragment, args); // Pass args here
                 return true;
             }
 
