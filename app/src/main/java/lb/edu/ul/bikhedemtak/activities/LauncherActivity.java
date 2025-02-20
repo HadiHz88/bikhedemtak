@@ -6,7 +6,6 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import lb.edu.ul.bikhedemtak.homepageActivity;
-import lb.edu.ul.bikhedemtak.testing.TestActivity;
 import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 /**
@@ -23,18 +22,13 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-//         Check if the user is logged in using SharedPrefsManager
+            // Check if the user is logged in using SharedPrefsManager
         if (SharedPrefsManager.isLoggedIn(this)) {
             // If logged in, start TestActivity
             startActivity(new Intent(this, homepageActivity.class));
         } else {
             // If not logged in, start AuthActivity
-            startActivity(new Intent(this, AuthActivity.class));
+            startActivity(new Intent(this, GetStartedActivity.class));
         }
-
-//        startActivity(new Intent(this, GetStartedActivity.class));
-
-        // Finish the current activity
     }
 }

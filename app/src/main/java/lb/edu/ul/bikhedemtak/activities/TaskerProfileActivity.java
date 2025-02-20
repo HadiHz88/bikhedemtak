@@ -3,12 +3,14 @@ package lb.edu.ul.bikhedemtak.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.ReviewAdapter;
@@ -109,6 +112,8 @@ public class TaskerProfileActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Tasker Profile");
         }
+        // Enable the Up button
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
     }
 
     /**
@@ -168,7 +173,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
      * Set up the RecyclerView with a layout manager and adapter.
      */
     private void setupRecyclerView() {
-        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        reviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
 
         // Initially set adapter with empty list to avoid no adapter attached error
         reviewAdapter = new ReviewAdapter(new ArrayList<>());
@@ -255,5 +260,13 @@ public class TaskerProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(TaskerProfileActivity.this, ViewAllReviewsActivity.class);
         intent.putExtra("reviews_list", (ArrayList<Review>) allReviews);
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

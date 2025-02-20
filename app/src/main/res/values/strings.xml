@@ -88,7 +88,7 @@
     <string name="password_reset_link">Password reset link sent to your email</string>
     <string name="RightDescription">Start The Conversation</string>
     <string name="BelowDescription">You\'re almost done! Share a few details to prepare your Tasker for the job.</string>
-    <string name="tasKDetailsParag">Wrtie Something...</string>
+    <string name="tasKDetailsParag">Wrtie Something…</string>
     <string name="Dialog_message">Discover additional services offered by \n your favorite Tasker, or assemble a team of your preferred Taskers \n under the My Taskers section.</string>
 
     <string name="Paragraph">hrehgihdioghoigoidhgoiifhklhfdhifoihhioiooihfiofooooooojvjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdsdf b iueureererer jfhjhbfjkdkjfjfkhdbfbdhkbdbvmxmndvxmxb cn cbdbjhsfbskj rgjyjyyyyyyyyfnry</string>
@@ -193,7 +193,7 @@
     <string name="book">Book</string>
 
     <string name="taskerName_text">You\'ve booked Dianne</string>
-    <string name="taskerStatusInfo_text">Dianne is currently offline and will reach out once available in the...</string>
+    <string name="taskerStatusInfo_text">Dianne is currently offline and will reach out once available in the…</string>
 
     <string name="calendarDate_text"> Friday - May 22, 2022</string>
     <string name="hour_text">9:30 am</string>
@@ -232,5 +232,100 @@
     <string name="help_text">Let us help you get the job done.</string>
 
     <string name="bookTask_text">Book a task and see it here.</string>
+
+
+    <string name="terms_of_service_dialog">
+    Terms of Service\n\n
+
+    Please read these Terms of Service carefully before using our app. By using our services, you agree to these terms and conditions.\n\n
+
+    1. Eligibility\n
+    • You must be 18 years or older to use this app.\n
+    • You are responsible for ensuring compliance with any applicable laws in your jurisdiction.\n\n
+
+    2. Account Responsibilities\n
+    • You are responsible for the security and confidentiality of your account information.\n
+    • You agree to notify us immediately if you suspect unauthorized access to your account.\n\n
+
+    3. Prohibited Conduct\n
+    By using our app, you agree NOT to:\n
+    • Engage in illegal activities or promote violence.\n
+    • Harass, abuse, or harm other users.\n
+    • Post content that is obscene, defamatory, or inappropriate.\n
+    • Attempt to access unauthorized areas of the app or our servers.\n\n
+
+    4. Intellectual Property\n
+    • All content in this app is protected by copyright, trademarks, and other intellectual property laws.\n
+    • You may not reproduce, distribute, or modify any content without permission.\n\n
+
+    5. Privacy\n
+    • Your personal information is governed by our Privacy Policy.\n\n
+
+    6. Limitation of Liability\n
+    • Our app is provided "as is" without warranties of any kind.\n
+    • We are not liable for any damages or losses resulting from your use of the app.\n\n
+
+    7. Termination\n
+    • We reserve the right to terminate or suspend your account at any time for violations of these terms.\n\n
+
+    8. Changes to Terms\n
+    • We may update these Terms of Service periodically. Continued use of the app signifies your acceptance of any changes.\n\n
+
+    Thank you for using our app! If you have any questions about these terms, please contact us.
+</string>
+
+
+
+
+    <string name="privacy_policy_dialog">
+    Privacy Policy\n\n
+
+    Your privacy is important to us. This Privacy Policy outlines how we collect, use, and protect your information.\n\n
+
+    1. Information We Collect\n
+    • Personal Information: Information such as your name, email address, phone number, and account details.\n
+    • Usage Information: Information about how you use our app, including pages visited, actions taken, and time spent on the app.\n
+    • Device Information: Information such as your device type, operating system, and IP address.\n\n
+
+    2. How We Use Your Information\n
+    • To provide and improve our services.\n
+    • To personalize your experience within the app.\n
+    • To communicate important updates and information to you.\n
+    • To monitor and improve app performance and troubleshoot issues.\n\n
+
+    3. Sharing Your Information\n
+    • We do not sell your personal information to third parties.\n
+    • We may share information with service providers who help us operate the app.\n
+    • We may disclose information if required by law or to protect our legal rights.\n\n
+
+    4. Security\n
+    • We take reasonable measures to protect your information from unauthorized access and misuse.\n
+    • However, no system is completely secure. We cannot guarantee the absolute security of your data.\n\n
+
+    5. Cookies and Tracking Technologies\n
+    • We may use cookies and similar technologies to improve your experience.\n
+    • You can control cookie settings through your device or browser settings.\n\n
+
+    6. Data Retention\n
+    • We retain your information for as long as necessary to provide our services or as required by law.\n\n
+
+    7. Your Rights\n
+    • You have the right to access, update, or delete your information.\n
+    • You may contact us to exercise your rights.\n\n
+
+    8. Children\'s Privacy\n
+    • Our app is not intended for children under 13. We do not knowingly collect information from children.\n\n
+
+    9. Changes to Privacy Policy\n
+    • We may update this Privacy Policy periodically. Continued use of the app signifies your acceptance of any changes.\n\n
+
+    10. Contact Us\n
+    If you have any questions or concerns about this Privacy Policy, please contact us at [your_contact_email].\n\n
+
+    Thank you for trusting us with your information.
+</string>
+
+
+
 
 </resources>

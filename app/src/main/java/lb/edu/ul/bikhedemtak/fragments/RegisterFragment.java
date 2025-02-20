@@ -241,13 +241,13 @@ public class RegisterFragment extends Fragment {
         int endIndexSecond = startIndexSecond + secondHighlight.length();
 
         // Configure Terms of Service span
-        spannableString.setSpan(createClickableSpan("Terms of Service"),
+        spannableString.setSpan(createClickableSpan("Terms of Service", 1),
                 startIndexFirst,
                 endIndexFirst,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         // Configure Privacy Policy span
-        spannableString.setSpan(createClickableSpan("Privacy Policy"),
+        spannableString.setSpan(createClickableSpan("Privacy Policy", 2),
                 startIndexSecond,
                 endIndexSecond,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -260,11 +260,11 @@ public class RegisterFragment extends Fragment {
      * @param title The title for the dialog to show when clicked
      * @return Configured ClickableSpan
      */
-    private ClickableSpan createClickableSpan(String title) {
+    private ClickableSpan createClickableSpan(String title, int choice) {
         return new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                showDialog(title, "Here are the " + title + " details...");
+                showDialog(title, choice);
             }
 
             @Override
@@ -279,12 +279,24 @@ public class RegisterFragment extends Fragment {
     /**
      * Shows a Material dialog with the specified title and message
      * @param title Dialog title
-     * @param message Dialog content message
+     * @param choice Dialog content message
      */
-    private void showDialog(String title, String message) {
+    private void showDialog(String title, int choice) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.terms_service_dialog, null);
+
+        TextView dialogTextView = dialogView.findViewById(R.id.dialogTextView);
+
+        if (choice == 1) {
+            dialogTextView.setText(R.string.terms_of_service_dialog);
+        } else {
+            dialogTextView.setText(R.string.privacy_policy_dialog);
+        }
+
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(title)
-                .setMessage(message)
+                .setView(dialogView)
                 .setPositiveButton("OK", null)
                 .show();
     }
