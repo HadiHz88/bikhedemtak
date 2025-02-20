@@ -2,8 +2,12 @@ package lb.edu.ul.bikhedemtak.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +33,13 @@ public class AllServicesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_services);
 
+        // Set up Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true); // Enable back button
+        getSupportActionBar().setDisplayShowHomeEnabled(true); // Show home button
+
+
         // Find the RecyclerView
         recyclerView = findViewById(R.id.recyclerViewServices);
         serviceList = new ArrayList<>();
@@ -40,9 +51,21 @@ public class AllServicesActivity extends AppCompatActivity {
         // Set up the adapter
         serviceAdapter = new ServiceAdapter(serviceList);
         recyclerView.setAdapter(serviceAdapter);
+        recyclerView.setVisibility(View.VISIBLE);
+
 
         fetchAllCategories();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed(); // Go back to the previous activity
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void fetchAllCategories() {
         String categoriesEndpoint = "getAllCategories.php"; // API URL
 
@@ -51,20 +74,18 @@ public class AllServicesActivity extends AppCompatActivity {
             public void onSuccess(JSONObject response) {
                 try {
                     // Assuming the response contains a "categories" array
-                    JSONArray categoriesArray = response.getJSONArray("categories");
-                    List<Service> serviceList = new ArrayList<>();
-
+                    JSONArray categoriesArray = response.getJSONArray("data");
+                    serviceList.clear();
                     // Loop through each category in the response
                     for (int i = 0; i < categoriesArray.length(); i++) {
                         JSONObject category = categoriesArray.getJSONObject(i);
-                        int id = category.getInt("id");  // Get the category ID
-                        String name = category.getString("name");  // Get the category name
+                        int id = category.getInt("category_id");  // Get the category ID
+                        String name = category.getString("category_name");  // Get the category name
                         serviceList.add(new Service(id, name));  // Add to the service list
                     }
+                    // Notify adapter on UI thread
+                    runOnUiThread(() -> serviceAdapter.notifyDataSetChanged());
 
-                    // Set the RecyclerView with the ServiceAdapter
-                    ServiceAdapter serviceAdapter = new ServiceAdapter(serviceList);
-                    recyclerView.setAdapter(serviceAdapter);
 
                 } catch (Exception e) {
                     e.printStackTrace();
