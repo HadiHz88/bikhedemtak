@@ -166,7 +166,7 @@ public class HomeFragment extends Fragment {
                     public void onSuccess(JSONObject response) {
                         try {
                             // Check if the API call was successful
-                            if (response.getString("status").equals("success")) {
+                            if (response != null && response.getString("status").equals("success")) {
                                 JSONArray categoriesArray = response.getJSONArray("data"); // Extract the "data" array
 
                                 List<SquareItem> squareItems = new ArrayList<>();
@@ -243,45 +243,50 @@ public class HomeFragment extends Fragment {
 
     private void fetchRecommendedProfiles() {
         String limit = "5";
-        String endpoint = "getRecommendedProfiles.php?limit=" + limit ;
+        String endpoint = "getRecommendedProfiles.php?limit=" + limit;
 
-        ApiRequest.getInstance().makeGetArrayRequest(
-                requireContext(), // Use requireContext() in a Fragment
+        ApiRequest.getInstance().makeGetObjectRequest(
+                requireContext(),
                 endpoint,
-                new ApiRequest.ResponseListener<JSONArray>() {
+                new ApiRequest.ResponseListener<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray response) {
+                    public void onSuccess(JSONObject response) {
                         try {
-                            List<SecondSquareItem> newItems = new ArrayList<>();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject tasker = response.getJSONObject(i);
+                            // Check if the API call was successful
+                            if (response != null && response.getString("status").equals("success")) {
+                                JSONArray profilesArray = response.getJSONArray("data"); // Extract the "data" array
 
-                                // Parse JSON data
-                                String name = tasker.optString("name", "Unknown"); // Tasker's name
-                                String profilePictureUrl = tasker.optString("profile_picture", ""); // Profile picture URL
-                                double rating = tasker.optDouble("rating", 0.0); // Tasker's rating
-                                int hourlyRate = tasker.optInt("hourly_rate", 0); // Tasker's hourly rate
-                                boolean availabilityStatus = tasker.optBoolean("availability_status", false); // Tasker's availability status
+                                List<SecondSquareItem> newItems = new ArrayList<>();
+                                for (int i = 0; i < profilesArray.length(); i++) {
+                                    JSONObject profileObject = profilesArray.getJSONObject(i);
 
-                                // Format waiting jobs text based on availability status
-                                String waitingJobs = availabilityStatus ? "Available" : "Not Available";
+                                    // Parse JSON data
+                                    String name = profileObject.optString("name", "Unknown"); // Tasker's name
+                                    String profilePictureUrl = profileObject.optString("profile_picture", ""); // Profile picture URL
+                                    double rating = profileObject.optDouble("rating", 0.0); // Tasker's rating
+                                    int hourlyRate = profileObject.optInt("hourly_rate", 0); // Tasker's hourly rate
+                                    boolean availabilityStatus = profileObject.optBoolean("availability_status", false); // Tasker's availability status
 
-                                // Add to the list
-                                newItems.add(new SecondSquareItem(profilePictureUrl, name, rating, hourlyRate, waitingJobs));
+                                    // Format waiting jobs text based on availability status
+                                    String waitingJobs = availabilityStatus ? "Available" : "Not Available";
+
+                                    // Add to the list
+                                    newItems.add(new SecondSquareItem(profilePictureUrl, name, rating, hourlyRate, waitingJobs));
+                                }
+
+                                    secondSquareAdapter = new SecondSquareAdapter(newItems);
+                                    secondHorizontalSquaresList.setAdapter(secondSquareAdapter);
                             }
-
-                            // Update the adapter with new data
-                            secondSquareAdapter = new SecondSquareAdapter(newItems);
-                            secondHorizontalSquaresList.setAdapter(secondSquareAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("HomepageActivity", "JSON parsing error: " + e.getMessage());
                         }
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        // Handle error
-                        Log.e("HomeFragment", "Error fetching recommended profiles: " + error);
+                        // Handle API error
+                        Log.e("HomepageActivity", "API Error: " + error);
                     }
                 }
         );
