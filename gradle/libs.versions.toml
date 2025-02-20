@@ -9,11 +9,14 @@ appcompat = "1.7.0"
 material = "1.12.0"
 constraintlayout = "2.2.0"
 navigationFragment = "2.8.7"
+navigationFragmentKtx = "2.x.x"
 navigationUi = "2.8.7"
 compiler = "4.15.1"
 fragmentKtx = "1.8.5"
 navigationFragmentVersion = "2.8.7"
+navigationUiKtx = "2.x.x"
 navigationUiVersion = "2.7.3"
+swiperefreshlayout = "1.1.0"
 viewpager2 = "1.1.0"
 activity = "1.10.0"
 #constraintlayout = "2.2.0"
@@ -22,6 +25,9 @@ activity = "1.10.0"
 volley = "1.2.1"
 
 [libraries]
+androidx-navigation-fragment-ktx-v2xx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
+androidx-navigation-ui-ktx-v2xx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationUiKtx" }
+androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
 dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

@@ -9,17 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import lb.edu.ul.bikhedemtak.databinding.FragmentMytaskerBinding;
+import lb.edu.ul.bikhedemtak.databinding.FragmentMyTaskerBinding;
 
 public class MyTaskerFragment extends Fragment {
 
-    private FragmentMytaskerBinding binding;
+    private FragmentMyTaskerBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
 
-        binding = FragmentMytaskerBinding.inflate(inflater, container, false);
+        binding = FragmentMyTaskerBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         return root;

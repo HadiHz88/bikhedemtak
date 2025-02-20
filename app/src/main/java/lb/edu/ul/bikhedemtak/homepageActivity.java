@@ -8,6 +8,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -20,21 +21,22 @@ public class homepageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.d("HomepageActivity", "onCreate() called");
-
-
 
         binding = ActivityHomepageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        // Set up NavController and AppBarConfiguration
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment_activity_homepage);
 
+        if (navHostFragment == null) {
+            Log.e("HomepageActivity", "NavHostFragment is null. Check the ID in the layout.");
+            return;
+        }
 
-
+        NavController navController = navHostFragment.getNavController();
+        Log.d("HomepageActivity", "NavController initialized: " + navController);
+        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
     @Override
@@ -55,4 +57,9 @@ public class homepageActivity extends AppCompatActivity {
         Log.d("HomepageActivity", "onDestroy() called");
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_homepage);
+        return super.onSupportNavigateUp();
+    }
 }

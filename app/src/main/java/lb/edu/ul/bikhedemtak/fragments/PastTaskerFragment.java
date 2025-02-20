@@ -1,5 +1,6 @@
 package lb.edu.ul.bikhedemtak.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.activities.TaskerProfileActivity;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
 
 public class PastTaskerFragment extends Fragment {
@@ -78,8 +80,8 @@ public class PastTaskerFragment extends Fragment {
         // Handle book button click
         Button btnBook = view.findViewById(R.id.btnBook);
         btnBook.setOnClickListener(v -> {
-            // Navigate to TaskerProfileFragment (assume it's implemented by another team member)
-            navigateToFragment(new TaskerProfileFragment());
+            Intent intent = new Intent(getContext(), TaskerProfileActivity.class);
+            intent.putExtra("tasker_id", taskerId);
         });
 
         return view;

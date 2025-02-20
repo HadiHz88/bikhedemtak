@@ -208,11 +208,13 @@ public class SearchResultFragment extends Fragment {
         });
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_homepage);
-        return navController.navigateUp() || super.onSupportNavigateUp();
-    }
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_homepage);
+//        return navController.navigateUp() || super.onSupportNavigateUp();
+//    }
+
+
 
 
 

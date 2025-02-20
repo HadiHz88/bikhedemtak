@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import lb.edu.ul.bikhedemtak.Carousel.CarouselAdapter;
 import lb.edu.ul.bikhedemtak.Carousel.CarouselItem;
@@ -32,6 +33,7 @@ import lb.edu.ul.bikhedemtak.recommendedsection.SecondSquareItem;
 import lb.edu.ul.bikhedemtak.SquareCategories.SquareAdapter;
 import lb.edu.ul.bikhedemtak.SquareCategories.SquareItem;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
+import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 public class HomeFragment extends Fragment {
 
@@ -66,7 +68,7 @@ public class HomeFragment extends Fragment {
         // Initialize the TextView
         greetingText = view.findViewById(R.id.greeting_text);
 
-        String userName = SharedPrefsManager.getUserName(this);
+        String userName = SharedPrefsManager.getUserName(requireContext());
         // Set the greeting message
         String greetingMessage = "Hello, " + userName + "! 😊";
         greetingText.setText(greetingMessage);
@@ -78,8 +80,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create an Intent to navigate to the desired Activity
-                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -91,8 +93,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Create an Intent to navigate to the desired Activity
-                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(getActivity(), AllServicesActivity.class);
+//                startActivity(intent);
             }
         });
 

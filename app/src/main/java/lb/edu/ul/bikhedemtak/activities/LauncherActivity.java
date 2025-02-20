@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import lb.edu.ul.bikhedemtak.homepageActivity;
 import lb.edu.ul.bikhedemtak.testing.TestActivity;
 import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
@@ -31,7 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
 //            startActivity(new Intent(this, AuthActivity.class));
 //        }
 
-        startActivity(new Intent(this, TaskCompletedActivity.class));
+        startActivity(new Intent(this, homepageActivity.class));
 
         // Finish the current activity
     }

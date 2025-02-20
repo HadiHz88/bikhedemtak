@@ -3,6 +3,7 @@ package lb.edu.ul.bikhedemtak.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class SharedPrefsManager {
@@ -62,5 +63,24 @@ public class SharedPrefsManager {
     public static String getPassword(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return prefs.getString(KEY_PASSWORD, "123456"); // Default password
+    }
+
+    public static void saveDefaultUserData(Context context) {
+        JSONObject userData = new JSONObject();
+        try {
+            userData.put("user_id", 1);
+            userData.put("name", "User");
+            userData.put("email", "user@example.com");
+            userData.put("password", "123456");
+            userData.put("is_tasker", false);
+            userData.put("token", "123456");
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String getUserEmail(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(KEY_EMAIL, "user@gmail.com");
     }
 }
