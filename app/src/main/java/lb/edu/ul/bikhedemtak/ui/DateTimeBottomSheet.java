@@ -22,7 +22,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.activities.BookingTaskActivity;
+import lb.edu.ul.bikhedemtak.activities.TaskDetailsActivity;
 
 /**
  * A BottomSheetDialogFragment that allows users to select a date and time.
@@ -68,8 +68,8 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
 
 //            Log.d("DateTimeBottomSheet", "selected date: " + date + " " + time);
 
-            // Create the intent to pass data back to BookingTaskActivity
-            Intent i = new Intent(getContext(), BookingTaskActivity.class);
+            // Create the intent to pass data back to TaskDetailsActivity
+            Intent i = new Intent(getContext(), TaskDetailsActivity.class);
             i.putExtra("tasker_id", taskerId); // Pass tasker_id as an integer
             i.putExtra("booking_time", date + " " + time); // Pass the combined date and time
             startActivity(i); // Start MainActivity with the passed data

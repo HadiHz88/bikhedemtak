@@ -160,34 +160,33 @@ public class HomeFragment extends Fragment {
         String limit = "5";
         String endpoint = "getFeaturedCategories.php?limit=" + limit;
 
-
-        ApiRequest.getInstance().makeGetArrayRequest(
+        ApiRequest.getInstance().makeGetObjectRequest(
                 getContext(),
                 endpoint,
-                new ApiRequest.ResponseListener<JSONArray>() {
+                new ApiRequest.ResponseListener<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray response) {
-
+                    public void onSuccess(JSONObject response) {
                         try {
+                            // Check if the API call was successful
+                            if (response != null && response.getString("status").equals("success")) {
+                                JSONArray categoriesArray = response.getJSONArray("data"); // Extract the "data" array
 
-                            Log.d("HomepageActivity", "API Response: " + response.toString());
+                                List<SquareItem> squareItems = new ArrayList<>();
+                                for (int i = 0; i < categoriesArray.length(); i++) {
+                                    JSONObject categoryObject = categoriesArray.getJSONObject(i);
+                                    int categoryId = categoryObject.getInt("category_id");
+                                    String categoryName = categoryObject.getString("category_name");
 
-                            if (response.length() == 0) {
-                                Log.e("HomepageActivity", "API returned an empty array!");
+                                    int iconResId = getIconForCategory(categoryName); // Dynamically set icon based on category
+                                    squareItems.add(new SquareItem(categoryId, iconResId, categoryName));
+                                }
+
+                                // Update the adapter and set it to the RecyclerView (or ListView)
+                                squareAdapter = new SquareAdapter(squareItems);
+                                horizontalSquaresList.setAdapter(squareAdapter);
+                            } else {
+                                Log.e("HomepageActivity", "API returned success=false");
                             }
-                            List<SquareItem> squareItems = new ArrayList<>();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject itemObject = response.getJSONObject(i);
-                                Log.d("HomepageActivity", "Category JSON: " + itemObject.toString());
-                                int categoryId = itemObject.getInt("category_id");
-                                String categoryName = itemObject.getString("category_name");
-                                int iconResId = getIconForCategory(categoryName); // Dynamically set icon based on category
-                                squareItems.add(new SquareItem(categoryId, iconResId, categoryName));
-                            }
-                            squareAdapter = new SquareAdapter(squareItems);
-                            horizontalSquaresList.setAdapter(squareAdapter);
-
-
                         } catch (JSONException e) {
                             Log.e("HomepageActivity", "JSON Parsing Error: ", e);
                         }
@@ -246,45 +245,50 @@ public class HomeFragment extends Fragment {
 
     private void fetchRecommendedProfiles() {
         String limit = "5";
-        String endpoint = "getRecommendedProfiles.php?limit=" + limit ;
+        String endpoint = "getRecommendedProfiles.php?limit=" + limit;
 
-        ApiRequest.getInstance().makeGetArrayRequest(
-                requireContext(), // Use requireContext() in a Fragment
+        ApiRequest.getInstance().makeGetObjectRequest(
+                requireContext(),
                 endpoint,
-                new ApiRequest.ResponseListener<JSONArray>() {
+                new ApiRequest.ResponseListener<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray response) {
+                    public void onSuccess(JSONObject response) {
                         try {
-                            List<SecondSquareItem> newItems = new ArrayList<>();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject tasker = response.getJSONObject(i);
+                            // Check if the API call was successful
+                            if (response != null && response.getString("status").equals("success")) {
+                                JSONArray profilesArray = response.getJSONArray("data"); // Extract the "data" array
 
-                                // Parse JSON data
-                                String name = tasker.optString("name", "Unknown"); // Tasker's name
-                                String profilePictureUrl = tasker.optString("profile_picture", ""); // Profile picture URL
-                                double rating = tasker.optDouble("rating", 0.0); // Tasker's rating
-                                int hourlyRate = tasker.optInt("hourly_rate", 0); // Tasker's hourly rate
-                                boolean availabilityStatus = tasker.optBoolean("availability_status", false); // Tasker's availability status
+                                List<SecondSquareItem> newItems = new ArrayList<>();
+                                for (int i = 0; i < profilesArray.length(); i++) {
+                                    JSONObject profileObject = profilesArray.getJSONObject(i);
 
-                                // Format waiting jobs text based on availability status
-                                String waitingJobs = availabilityStatus ? "Available" : "Not Available";
+                                    // Parse JSON data
+                                    String name = profileObject.optString("name", "Unknown"); // Tasker's name
+                                    String profilePictureUrl = profileObject.optString("profile_picture", ""); // Profile picture URL
+                                    double rating = profileObject.optDouble("rating", 0.0); // Tasker's rating
+                                    int hourlyRate = profileObject.optInt("hourly_rate", 0); // Tasker's hourly rate
+                                    boolean availabilityStatus = profileObject.optBoolean("availability_status", false); // Tasker's availability status
 
-                                // Add to the list
-                                newItems.add(new SecondSquareItem(profilePictureUrl, name, rating, hourlyRate, waitingJobs));
+                                    // Format waiting jobs text based on availability status
+                                    String waitingJobs = availabilityStatus ? "Available" : "Not Available";
+
+                                    // Add to the list
+                                    newItems.add(new SecondSquareItem(profilePictureUrl, name, rating, hourlyRate, waitingJobs));
+                                }
+
+                                    secondSquareAdapter = new SecondSquareAdapter(newItems);
+                                    secondHorizontalSquaresList.setAdapter(secondSquareAdapter);
                             }
-
-                            // Update the adapter with new data
-                            secondSquareAdapter = new SecondSquareAdapter(newItems);
-                            secondHorizontalSquaresList.setAdapter(secondSquareAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Log.e("HomepageActivity", "JSON parsing error: " + e.getMessage());
                         }
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        // Handle error
-                        Log.e("HomeFragment", "Error fetching recommended profiles: " + error);
+                        // Handle API error
+                        Log.e("HomepageActivity", "API Error: " + error);
                     }
                 }
         );
@@ -294,42 +298,45 @@ public class HomeFragment extends Fragment {
     private void fetchMostBookedCategories() {
         String endpoint = "getMostBookedCategories.php";
 
-        ApiRequest.getInstance().makeGetArrayRequest(
-                requireContext(),
+        ApiRequest.getInstance().makeGetObjectRequest(
+                getContext(),
                 endpoint,
-                new ApiRequest.ResponseListener<JSONArray>() {
+                new ApiRequest.ResponseListener<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray response) {
+                    public void onSuccess(JSONObject response) {
                         try {
-                            List<FeatureService> newServices = new ArrayList<>();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject category = response.getJSONObject(i);
+                            // Check if the API call was successful
+                            if (response != null && response.getString("status").equals("success")) {
+                                JSONArray categoriesArray = response.getJSONArray("data"); // Extract the "data" array
 
-                                // Parse JSON data
-                                String categoryName = category.getString("category_name");
+                                List<FeatureService> newServices = new ArrayList<>();
+                                for (int i = 0; i < categoriesArray.length(); i++) {
+                                    JSONObject categoryObject = categoriesArray.getJSONObject(i);
+                                    String categoryName = categoryObject.getString("category_name");
 
-                                // Add to the list
-                                newServices.add(new FeatureService(categoryName));
+                                    // Add to the list
+                                    newServices.add(new FeatureService(categoryName));
+                                }
+
+                                // Update the adapter with new data
+                                featureServiceAdapter = new FeatureServiceAdapter(newServices);
+                                featureServicesRecyclerView.setAdapter(featureServiceAdapter);
+                            } else {
+                                Log.e("HomepageActivity", "API returned success=false");
                             }
-
-                            // Update the adapter with new data
-                            featureServiceAdapter = new FeatureServiceAdapter(newServices);
-                            featureServicesRecyclerView.setAdapter(featureServiceAdapter);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("HomepageActivity", "JSON Parsing Error: ", e);
                         }
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        // Handle error
-                        Log.e("HomeFragment", "Error fetching most booked categories: " + error);
+                        // Handle API error
+                        Log.e("HomepageActivity", "Error fetching most booked categories: " + error);
                     }
                 }
         );
     }
-
-
 
 
 
