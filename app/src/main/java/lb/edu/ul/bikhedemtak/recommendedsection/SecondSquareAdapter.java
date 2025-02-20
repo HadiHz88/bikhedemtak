@@ -1,5 +1,7 @@
 package lb.edu.ul.bikhedemtak.recommendedsection;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +15,17 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import lb.edu.ul.bikhedemtak.R;
-import lb.edu.ul.bikhedemtak.recommendedsection.SecondSquareItem;
+import lb.edu.ul.bikhedemtak.activities.TaskerProfileActivity;
 
 public class SecondSquareAdapter extends RecyclerView.Adapter<SecondSquareAdapter.SecondSquareViewHolder> {
 
     private List<SecondSquareItem> secondSquareItems;
+    private Context context; // Add a Context member variable
 
-    public SecondSquareAdapter(List<SecondSquareItem> secondSquareItems) {
+    // Update the constructor to accept a Context
+    public SecondSquareAdapter(List<SecondSquareItem> secondSquareItems, Context context) {
         this.secondSquareItems = secondSquareItems;
+        this.context = context; // Initialize the Context
     }
 
     @NonNull
@@ -44,6 +49,20 @@ public class SecondSquareAdapter extends RecyclerView.Adapter<SecondSquareAdapte
         holder.rate.setText("$" + item.getHourlyRate() + "/hr"); // Format hourly rate
         holder.rating.setText(String.valueOf(item.getRating())); // Display rating
         holder.waitingJobs.setText(item.getWaitingJobs()); // Display availability status
+
+        // Handle item click
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navigate to the profile activity
+                Intent intent = new Intent(context, TaskerProfileActivity.class);
+
+                // Pass the tasker_id to the profile activity
+                intent.putExtra("tasker_id", item.getTaskerId());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
