@@ -296,42 +296,45 @@ public class HomeFragment extends Fragment {
     private void fetchMostBookedCategories() {
         String endpoint = "getMostBookedCategories.php";
 
-        ApiRequest.getInstance().makeGetArrayRequest(
-                requireContext(),
+        ApiRequest.getInstance().makeGetObjectRequest(
+                getContext(),
                 endpoint,
-                new ApiRequest.ResponseListener<JSONArray>() {
+                new ApiRequest.ResponseListener<JSONObject>() {
                     @Override
-                    public void onSuccess(JSONArray response) {
+                    public void onSuccess(JSONObject response) {
                         try {
-                            List<FeatureService> newServices = new ArrayList<>();
-                            for (int i = 0; i < response.length(); i++) {
-                                JSONObject category = response.getJSONObject(i);
+                            // Check if the API call was successful
+                            if (response != null && response.getString("status").equals("success")) {
+                                JSONArray categoriesArray = response.getJSONArray("data"); // Extract the "data" array
 
-                                // Parse JSON data
-                                String categoryName = category.getString("category_name");
+                                List<FeatureService> newServices = new ArrayList<>();
+                                for (int i = 0; i < categoriesArray.length(); i++) {
+                                    JSONObject categoryObject = categoriesArray.getJSONObject(i);
+                                    String categoryName = categoryObject.getString("category_name");
 
-                                // Add to the list
-                                newServices.add(new FeatureService(categoryName));
+                                    // Add to the list
+                                    newServices.add(new FeatureService(categoryName));
+                                }
+
+                                // Update the adapter with new data
+                                featureServiceAdapter = new FeatureServiceAdapter(newServices);
+                                featureServicesRecyclerView.setAdapter(featureServiceAdapter);
+                            } else {
+                                Log.e("HomepageActivity", "API returned success=false");
                             }
-
-                            // Update the adapter with new data
-                            featureServiceAdapter = new FeatureServiceAdapter(newServices);
-                            featureServicesRecyclerView.setAdapter(featureServiceAdapter);
                         } catch (JSONException e) {
-                            e.printStackTrace();
+                            Log.e("HomepageActivity", "JSON Parsing Error: ", e);
                         }
                     }
 
                     @Override
                     public void onFailure(String error) {
-                        // Handle error
-                        Log.e("HomeFragment", "Error fetching most booked categories: " + error);
+                        // Handle API error
+                        Log.e("HomepageActivity", "Error fetching most booked categories: " + error);
                     }
                 }
         );
     }
-
-
 
 
 
