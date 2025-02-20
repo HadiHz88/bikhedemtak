@@ -65,7 +65,7 @@ public class SearchResultFragment extends Fragment {
         categorySpinner = view.findViewById(R.id.categorySpinner);
         hourlyRateSeekBar = view.findViewById(R.id.hourlyRateSeekBar);
         hourlyRateTextView = view.findViewById(R.id.hourlyRateTextView);
-        recyclerView = view.findViewById(R.id.recyclerView_Result);
+        searchResultsRecyclerView = view.findViewById(R.id.recyclerView_Result);
 
 
         // Set up the toolbar
@@ -83,10 +83,10 @@ public class SearchResultFragment extends Fragment {
 
 
         // Set up RecyclerView
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         searchResultList = new ArrayList<>();
-        adapter = new SearchResultAdapter(searchResultList);
-        recyclerView.setAdapter(adapter);
+        searchResultAdapter = new SearchResultAdapter(searchResultList);
+        searchResultsRecyclerView.setAdapter(searchResultAdapter);
 
 
 
