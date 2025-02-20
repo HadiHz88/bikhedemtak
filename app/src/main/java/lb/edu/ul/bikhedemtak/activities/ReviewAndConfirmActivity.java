@@ -66,7 +66,7 @@ public class ReviewAndConfirmActivity extends AppCompatActivity {
 
             // Set data to UI
             binding.UserName.setText(name);
-            Glide.with(this).load(profilePicture).placeholder(R.drawable.img).error(R.drawable.img).into(binding.ProfileImage);
+            Glide.with(this).load(profilePicture).placeholder(R.drawable.default_pp).error(R.drawable.default_pp).into(binding.ProfileImage);
             binding.hourlyRate.setText(hourlyRate);
             binding.totalRate.setText(totalRate);
             binding.bookingDate.setText(bookingDate);

@@ -87,7 +87,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
                     binding.UserName.setText(name);
                     Glide.with(TaskDetailsActivity.this)
                             .load(profilePicture)
-                            .placeholder(R.drawable.img)
+                            .placeholder(R.drawable.default_pp)
                             .into(binding.ProfileImage);
 
                     setupUserInputListener();

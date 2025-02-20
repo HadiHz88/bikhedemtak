@@ -98,7 +98,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:contentDescription="Profile Photo"
-                    android:src="@drawable/img"
+                    android:src="@drawable/default_pp"
                     app:shapeAppearanceOverlay="@style/roundedImageView" />
                 <!--the name of the user -->
                 <TextView

@@ -35,7 +35,7 @@ public class PastTaskerFragment extends Fragment {
         String taskerName = "John Doe";
         int taskerRating = 4; // Example rating out of 5
         String taskerJobs = "3 overall jobs";
-        int taskerPhoto = R.drawable.img; // Replace with your image resource
+        int taskerPhoto = R.drawable.default_pp; // Replace with your image resource
         taskerId = "1"; // Replace with actual tasker ID from API
 
         // Set tasker photo
