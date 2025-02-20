@@ -8,8 +8,7 @@
     <fragment
         android:id="@+id/taskScheduledFragment"
         android:name="lb.edu.ul.bikhedemtak.fragments.TaskScheduledFragment"
-        android:label="Scheduled Fragment"
-        tools:layout="@layout/fragment_task_scheduled"/>
+        android:label="Scheduled Tasks" />
 
     <fragment
         android:id="@+id/taskCompletedFragment"

@@ -1,5 +1,6 @@
 package lb.edu.ul.bikhedemtak.adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.activities.TaskCompletedActivity;
+import lb.edu.ul.bikhedemtak.activities.TaskInfoActivity;
+import lb.edu.ul.bikhedemtak.activities.TaskerProfileActivity;
+import lb.edu.ul.bikhedemtak.api.ApiRequest;
 import lb.edu.ul.bikhedemtak.models.Task;
 
 
@@ -28,14 +36,14 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
         public ImageView taskerImg;
         public TextView dateBooking, timeBooking, taskAssigned;
-        public Button bookButton;
+        public Button seeMoreButton;
         public TaskViewHolder(View taskView) {
             super(taskView);
             taskerImg = taskView.findViewById(R.id.taskerProfilePicture);
             dateBooking = taskView.findViewById(R.id.dateBookingTv);
             timeBooking = taskView.findViewById(R.id.timeBookingTv);
             taskAssigned = taskView.findViewById(R.id.taskAssignedTv);
-            bookButton = taskView.findViewById(R.id.booking_btn);
+            seeMoreButton = taskView.findViewById(R.id.seeMoreButton);
         }
     }
     @NonNull
@@ -52,12 +60,22 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
         holder.dateBooking.setText(currentTask.getDateBooking());
         holder.timeBooking.setText(currentTask.getTimeBooking());
         holder.taskAssigned.setText(currentTask.getTaskAssigned());
-        holder.taskerImg.setImageResource(currentTask.getTaskerImg());
+        holder.taskerImg.setImageResource(R.drawable.default_pp);
 
-        holder.bookButton.setOnClickListener(v -> {
-            //TODO: Implement booking logic
+        holder.seeMoreButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), currentTask.isCompleted() ? TaskCompletedActivity.class : TaskInfoActivity.class);
+            int task_id = taskList.get(position).getId();
+
+            intent.putExtra("task_id", task_id);
+            v.getContext().startActivity(intent);
         });
     }
+
+    public void updateTasks(List<Task> newTasks) {
+        this.taskList = newTasks;
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getItemCount() {

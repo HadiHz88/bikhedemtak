@@ -1,17 +1,18 @@
 package lb.edu.ul.bikhedemtak.models;
 
 public class Task {
-    private String dateBooking, timeBooking, taskAssigned;
-    private int id, taskerImg;
-    private boolean isBooked;
+    private String dateBooking, timeBooking, taskAssigned, taskerImg;
+    private int id;
+    private boolean isCompleted;
 
-    public Task(int id, String dateBooking, String timeBooking, String taskAssigned, int taskerImg) {
+    public Task(int id, String dateBooking, String timeBooking, String taskerImg, boolean isCompleted, String taskAssigned) {
         this.id = id;
         this.dateBooking = dateBooking;
         this.timeBooking = timeBooking;
         this.taskAssigned = taskAssigned;
         this.taskerImg = taskerImg;
-        this.isBooked = false;
+        this.isCompleted = isCompleted;
+        this.taskAssigned = taskAssigned;
     }
 
     public String getDateBooking() {
@@ -22,7 +23,7 @@ public class Task {
         return timeBooking;
     }
 
-    public int getTaskerImg() {
+    public String getTaskerImg() {
         return taskerImg;
     }
 
@@ -30,16 +31,16 @@ public class Task {
         return taskAssigned;
     }
 
-    public boolean isBooked() {
-        return isBooked;
+    public boolean isCompleted() {
+        return isCompleted;
     }
 
-    public void setTaskerImg(int taskerImg) {
+    public void setTaskerImg(String taskerImg) {
         this.taskerImg = taskerImg;
     }
 
-    public void setBooked(boolean booked) {
-        isBooked = booked;
+    public void setCompleted(boolean Completed) {
+        this.isCompleted = Completed;
     }
 
     public int getId() {

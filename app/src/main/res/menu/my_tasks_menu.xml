@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/taskCompletedFragment"
-        android:title="Completed" />
-    <item
         android:id="@+id/taskScheduledFragment"
         android:title="Scheduled" />
+    <item
+        android:id="@+id/taskCompletedFragment"
+        android:title="Completed" />
 </menu>

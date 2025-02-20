@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_task"
-        android:name="lb.edu.ul.bikhedemtak.TaskFragment"
+        android:name="lb.edu.ul.bikhedemtak.fragments.MyTasksFragment"
         android:label="@string/task"
-        tools:layout="@layout/fragment_task" />
+        tools:layout="@layout/fragment_my_tasks" />
 
     <fragment
         android:id="@+id/navigation_myTasker"
