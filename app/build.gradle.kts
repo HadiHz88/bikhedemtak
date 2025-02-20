@@ -29,28 +29,12 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    buildFeatures {
-        viewBinding = true
-    }
 }
 
 dependencies {
-    implementation(libs.dotsindicator)
-    implementation (libs.viewpager2)
+
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation (libs.navigation.fragment.ktx)
-    implementation (libs.androidx.navigation.ui.ktx)
-
-    implementation(libs.navigation.ui)
-    implementation (libs.androidx.fragment.ktx)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
-    implementation(libs.circleimageview)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    implementation(libs.navigation.fragment)
-    implementation(libs.volley)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

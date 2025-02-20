@@ -27,6 +27,8 @@
     <!-- Navbar & Other -->
     <string name="search">Search</string>
     <string name="home">Home</string>
+    <string name="task">Task</string>
+    <string name="myTasker">My Tasker</string>
     <string name="profile">Profile</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
@@ -92,7 +94,8 @@
     <string name="Paragraph">hrehgihdioghoigoidhgoiifhklhfdhifoihhioiooihfiofooooooojvjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjdsdf b iueureererer jfhjhbfjkdkjfjfkhdbfbdhkbdbvmxmndvxmxb cn cbdbjhsfbskj rgjyjyyyyyyyyfnry</string>
 
     <!-- Placeholders -->
-    <string name="search_placeholder">Type to search…</string>
+    <string name="searchLocation_placeholder">Tap to select location</string>
+    <string name="search_placeholder">Search the services you need</string>
     <string name="email_placeholder">Enter your email</string>
     <string name="password_placeholder">Enter your password</string>
     <string name="first_name_placeholder">Enter your first name</string>
@@ -169,9 +172,10 @@
     <string name="onboarding_skip">Skip</string>
     <string name="onboarding_next">Next</string>
     <string name="onboarding_done">Done</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_homepage">homepageActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <string name="TODO">TODO</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>

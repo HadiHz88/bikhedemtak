@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/home_icon"
+        android:title="@string/title_home"
+        />
+
+    <item
+        android:id="@+id/navigation_task"
+        android:icon="@drawable/tasker_icon"
+        android:title="@string/task" />
+
+    <item
+        android:id="@+id/navigation_myTasker"
+        android:icon="@drawable/favorite_icon"
+        android:title="@string/myTasker" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile_icon"
+        android:title="@string/profile" />
+
+
+
+
+
+
+</menu>
+

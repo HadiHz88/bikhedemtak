@@ -1,0 +1,82 @@
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/square_background"
+    android:padding="8dp"
+    android:layout_columnSpan="1"
+    android:stretchColumns="1"
+    android:layout_marginEnd="30dp">
+
+
+<TableRow
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginBottom="8dp">
+
+
+    <ImageView
+        android:id="@+id/profile_icon"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_weight="1"
+        android:contentDescription="Profile Icon"
+        android:src="@drawable/image1" />
+
+</TableRow>
+
+
+<TableRow
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_marginBottom="4dp">
+
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+      android:layout_weight="2"
+        android:text="John Smith"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$18/hr"
+        android:textSize="14sp" />
+</TableRow>
+
+
+
+
+
+<TableRow
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginBottom="4dp">
+
+
+<TextView
+    android:id="@+id/rating"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="★ 4.5(4 reviews)"
+    android:textSize="14sp" />
+</TableRow>
+
+
+<TableRow
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+<TextView
+    android:id="@+id/waiting_jobs"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="5 waiting in line jobs"
+    android:textSize="14sp" />
+</TableRow>
+    </TableLayout>
