@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:drawableLeft="@drawable/ic_arrow_left"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:color/white"
+        />
+
+
+
+    <EditText
+        android:id="@+id/etProfession"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Profession" />
+
+    <Spinner
+        android:id="@+id/spAvailability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/availability_options" />
+
+    <CheckBox
+        android:id="@+id/cbPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="I accept the policy" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_marginTop="16dp" />
+</LinearLayout>

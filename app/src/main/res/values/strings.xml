@@ -203,4 +203,20 @@
 
     <string name="leaveFeedback_text">Leave feedback about tasker</string>
 
+
+    <string name="title_my_tasker">My Tasker</string>
+    <string name="title_favorite_tasker">Favorite Tasker</string>
+    <string name="title_past_tasker">Past Tasker</string>
+    <string name="tasker_name">Dianne Russell</string>
+    <string name="tasker_rating">***** (3 reviews)</string>
+    <string name="tasker_jobs">1 overall job</string>
+    <string name="more_options">More options</string>
+    <!--  Add gift cards array  -->
+    <string-array name="gift_cards_array">
+        <item>$10 Gift Card</item>
+        <item>$20 Gift Card</item>
+        <item>$50 Gift Card</item>
+        <item>$100 Gift Card</item>
+    </string-array>
+
 </resources>

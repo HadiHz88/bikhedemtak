@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_my_tasker"
+        android:icon="@drawable/ic_my_tasker"
+        android:title="My Tasker" />
+    <item
+        android:id="@+id/nav_favorite_tasker"
+        android:icon="@drawable/ic_favorite_tasker"
+        android:title="Favorite Tasker" />
+    <item
+        android:id="@+id/nav_past_tasker"
+        android:icon="@drawable/ic_past_tasker"
+        android:title="Past Tasker" />
+</menu>

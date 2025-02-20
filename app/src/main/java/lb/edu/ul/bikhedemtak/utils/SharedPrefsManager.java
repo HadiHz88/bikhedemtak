@@ -12,6 +12,7 @@ public class SharedPrefsManager {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_TOKEN = "token";
     private static final String KEY_IS_TASKER = "is_tasker";
+    private static final String KEY_PASSWORD = "password";
 
     public static void saveUserData(Context context, JSONObject userData) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
@@ -22,6 +23,7 @@ public class SharedPrefsManager {
         editor.putString(KEY_EMAIL, userData.optString("email"));
         editor.putString(KEY_TOKEN, userData.optString("token"));
         editor.putBoolean(KEY_IS_TASKER, userData.optBoolean("is_tasker"));
+        editor.putString(KEY_PASSWORD, userData.optString("password"));
 
         editor.apply();
     }
@@ -48,5 +50,17 @@ public class SharedPrefsManager {
     public static int getUserId(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         return prefs.getInt(KEY_USER_ID, 0);
+    }
+
+    public static void updatePassword(Context context, String newPassword) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_PASSWORD, newPassword);
+        editor.apply();
+    }
+
+    public static String getPassword(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return prefs.getString(KEY_PASSWORD, "123456"); // Default password
     }
 }

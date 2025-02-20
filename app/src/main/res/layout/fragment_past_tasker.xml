@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:background="@color/white">
+
+    <!-- Tasker Profile Picture -->
+    <ImageView
+        android:id="@+id/imageTasker"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img"
+        android:background="@drawable/circle_background"
+        android:clipToOutline="true"/>
+
+    <!-- Tasker Info -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Tasker Name -->
+            <TextView
+                android:id="@+id/taskerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tasker Name"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <!-- Favorite Button -->
+            <ImageView
+                android:id="@+id/btnFavorite"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_heart_empty"/>
+        </RelativeLayout>
+
+        <!-- Tasker Rating -->
+        <LinearLayout
+            android:id="@+id/ratingContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+        </LinearLayout>
+
+        <!-- Completed Jobs -->
+        <TextView
+            android:id="@+id/taskerJobs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed Jobs"
+            android:textSize="16sp"
+            android:textColor="@color/black"/>
+
+        <!-- Book Now Button -->
+        <Button
+            android:id="@+id/btnBook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Now"
+            android:layout_marginTop="8dp"/>
+    </LinearLayout>
+
+</LinearLayout>
