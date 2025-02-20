@@ -7,9 +7,11 @@ public class SearchResult {
     private String profilePicture;
     private double rating;
     private String description;
-    private String waitingJobs; // Availability status
+    private String waitingJobs;
+    private int taskerId;
 
-    public SearchResult(String name, String skill, double hourlyRate, String profilePicture, double rating, String description, String waitingJobs) {
+
+    public SearchResult(String name, String skill, double hourlyRate, String profilePicture, double rating, String description, String waitingJobs,int taskerId) {
         this.name = name;
         this.skill = skill;
         this.hourlyRate = hourlyRate;
@@ -17,6 +19,7 @@ public class SearchResult {
         this.rating = rating;
         this.description = description;
         this.waitingJobs = waitingJobs;
+        this.taskerId = taskerId;
     }
 
     // Getters and setters
@@ -47,4 +50,5 @@ public class SearchResult {
     public String getWaitingJobs() {
         return waitingJobs;
     }
+    public int getTaskerId() {return taskerId;}
 }

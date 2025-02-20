@@ -6,7 +6,7 @@ public class SecondSquareItem {
     private double rating;
     private int hourlyRate;
     private String waitingJobs;
-    private int taskerId; // Add taskerId
+    private int taskerId;
 
     public SecondSquareItem(String profilePictureUrl, String name, double rating, int hourlyRate, String waitingJobs, int taskerId) {
         this.profilePictureUrl = profilePictureUrl;
@@ -14,7 +14,7 @@ public class SecondSquareItem {
         this.rating = rating;
         this.hourlyRate = hourlyRate;
         this.waitingJobs = waitingJobs;
-        this.taskerId = taskerId; // Initialize taskerId
+        this.taskerId = taskerId;
     }
 
     // Getters

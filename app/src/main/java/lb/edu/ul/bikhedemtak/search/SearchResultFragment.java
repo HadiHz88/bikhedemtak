@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.activities.TaskerProfileActivity;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
 
 public class SearchResultFragment extends Fragment {
@@ -100,7 +101,7 @@ public class SearchResultFragment extends Fragment {
     private void setupRecyclerView() {
         searchResultsRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         searchResultList = new ArrayList<>();
-        searchResultAdapter = new SearchResultAdapter(searchResultList);
+        searchResultAdapter = new SearchResultAdapter(searchResultList,requireContext());
         searchResultsRecyclerView.setAdapter(searchResultAdapter);
     }
 
@@ -223,12 +224,14 @@ public class SearchResultFragment extends Fragment {
                                     // Format waiting jobs text based on availability status
                                     String waitingJobs = availabilityStatus ? "Available" : "Not Available";
 
+                                    int taskerId = taskerObject.optInt("tasker_id", -1); // Tasker's ID
+
                                     // Add to the list
-                                    newSearchResults.add(new SearchResult(name, skill, hourlyRate, profilePicture, rating, description, waitingJobs));
+                                    newSearchResults.add(new SearchResult(name, skill, hourlyRate, profilePicture, rating, description, waitingJobs,taskerId));
                                 }
 
                                 // Update the adapter with new data
-                                searchResultAdapter = new SearchResultAdapter(newSearchResults);
+                                searchResultAdapter = new SearchResultAdapter(newSearchResults,requireContext());
                                 searchResultsRecyclerView.setAdapter(searchResultAdapter);
                             } else {
                                 Log.e("SearchFragment", "API returned success=false");

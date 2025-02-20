@@ -20,12 +20,12 @@ import lb.edu.ul.bikhedemtak.activities.TaskerProfileActivity;
 public class SecondSquareAdapter extends RecyclerView.Adapter<SecondSquareAdapter.SecondSquareViewHolder> {
 
     private List<SecondSquareItem> secondSquareItems;
-    private Context context; // Add a Context member variable
+    private Context context;
 
     // Update the constructor to accept a Context
     public SecondSquareAdapter(List<SecondSquareItem> secondSquareItems, Context context) {
         this.secondSquareItems = secondSquareItems;
-        this.context = context; // Initialize the Context
+        this.context = context;
     }
 
     @NonNull
@@ -70,12 +70,7 @@ public class SecondSquareAdapter extends RecyclerView.Adapter<SecondSquareAdapte
         return secondSquareItems.size();
     }
 
-    // Method to update the data in the adapter
-    public void updateData(List<SecondSquareItem> newItems) {
-        secondSquareItems.clear();
-        secondSquareItems.addAll(newItems);
-        notifyDataSetChanged(); // Notify the adapter that data has changed
-    }
+
 
     static class SecondSquareViewHolder extends RecyclerView.ViewHolder {
         ImageView profileIcon;
