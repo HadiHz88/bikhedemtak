@@ -85,7 +85,7 @@ public class TaskCompletedActivity extends AppCompatActivity {
                         bookingTimeTv.setText(timeBooking);
                         hourlyPriceTv.setText("$" + TaskPricePerHour + "/hr");
                         taskerNotesTv.setText(taskDescription);
-                        totalRatePriceTv.setText(TaskPricePerHour + 3);
+                        totalRatePriceTv.setText(String.valueOf(TaskPricePerHour + 3));
 
                     }
                 } catch (JSONException e) {

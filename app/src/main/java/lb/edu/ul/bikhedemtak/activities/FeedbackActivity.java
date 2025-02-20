@@ -5,19 +5,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textview.MaterialTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -70,7 +66,7 @@ public class FeedbackActivity extends AppCompatActivity {
         feedbackLabel = findViewById(R.id.feedbackLabel);
 
 //        reviewer_id = SharedPrefsManager.getUserId(this);
-        reviewer_id = 2; // Replace with the actual reviewer ID
+        reviewer_id = SharedPrefsManager.getUserId(this); // Replace with the actual reviewer ID
         // Retrieve the tasker name from the Intent
         Intent intent = getIntent();
         if (intent != null) {

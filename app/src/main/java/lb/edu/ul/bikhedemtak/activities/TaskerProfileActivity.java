@@ -48,6 +48,8 @@ public class TaskerProfileActivity extends AppCompatActivity {
     private RatingBar taskerRatingBar;
     List<Review> allReviews;
 
+    private int tasker_id;
+
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -55,6 +57,13 @@ public class TaskerProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tasker_profile);
+
+        Intent intent = getIntent();
+        if(intent == null) {
+            Log.d("TaskerProfileActivity", "Intent is null");
+            return;
+        }
+        tasker_id = intent.getIntExtra("tasker_id", 2);
 
         initializeViews();
         setupToolbar();
@@ -106,8 +115,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
      * Fetch tasker details from the API.
      */
     private void fetchTaskerDetails() {
-        int taskerId = 1; // Temporary tasker ID
-        String taskerDetailsEndpoint = "getTaskerDetails.php?tasker_id=" + taskerId;
+        String taskerDetailsEndpoint = "getTaskerDetails.php?tasker_id=" + tasker_id;
 
         ApiRequest.getInstance().makeGetObjectRequest(this, taskerDetailsEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override
@@ -166,7 +174,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
         reviewAdapter = new ReviewAdapter(new ArrayList<>());
         reviewsRecyclerView.setAdapter(reviewAdapter);
 
-        String reviewsEndpoint = "getTaskerReviews.php?tasker_id=1"; // Temporary tasker ID
+        String reviewsEndpoint = "getTaskerReviews.php?tasker_id=" + tasker_id; // Temporary tasker ID
 
         ApiRequest.getInstance().makeGetObjectRequest(this, reviewsEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override
