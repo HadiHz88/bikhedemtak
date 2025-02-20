@@ -5,23 +5,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import lb.edu.ul.bikhedemtak.HomeFragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.appbar.MaterialToolbar;
+
 
 
 import org.json.JSONArray;
@@ -60,6 +57,7 @@ public class SearchResultFragment extends Fragment {
         setupRecyclerView();
         setupHourlyRateSeekBar();
         setupSearchView();
+        setupSpinnerListener();
 
         // Fetch categories first, then perform search if we have an initial query
         fetchCategories(new CategoryFetchCallback() {
@@ -178,6 +176,27 @@ public class SearchResultFragment extends Fragment {
             int hourlyRate = hourlyRateSeekBar.getProgress();
             fetchSearchResults(query, category, hourlyRate);
         }
+    }
+
+    private void setupSpinnerListener() {
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected category
+                String selectedCategory = parent.getItemAtPosition(position).toString();
+
+                // Perform search with the selected category
+                if (searchView != null && searchView.getQuery() != null) {
+                    String query = searchView.getQuery().toString();
+                    performSearch(query);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
 
