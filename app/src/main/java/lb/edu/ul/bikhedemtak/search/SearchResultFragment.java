@@ -41,8 +41,8 @@ public class SearchResultFragment extends Fragment {
     private Spinner categorySpinner;
     private SeekBar hourlyRateSeekBar;
     private TextView hourlyRateTextView;
-    private RecyclerView recyclerView;
-    private SearchResultAdapter adapter;
+    private RecyclerView searchResultsRecyclerView;
+    private SearchResultAdapter searchResultAdapter;
     private List<SearchResult> searchResultList;
 
     private String query;
@@ -131,14 +131,19 @@ public class SearchResultFragment extends Fragment {
     private void fetchCategories() {
         String endpoint = "getFeaturedCategories.php?limit=" ;
 
-        ApiRequest.getInstance().makeGetArrayRequest(requireContext(), endpoint, new ApiRequest.ResponseListener<JSONArray>() {
+        ApiRequest.getInstance().makeGetObjectRequest(requireContext(), endpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override
-            public void onSuccess(JSONArray response) {
+            public void onSuccess(JSONObject response) {
                 try {
+                    // Check if the API call was successful
+                    if (response != null && response.getString("status").equals("success")) {
+                        JSONArray categoriesArray = response.getJSONArray("data"); // Extract the "data" array
+
                     List<String> categories = new ArrayList<>();
-                    for (int i = 0; i < response.length(); i++) {
-                        String category = response.getString(i);
-                        categories.add(category);
+                    for (int i = 0; i < categoriesArray.length(); i++) {
+                        JSONObject categoryObject = categoriesArray.getJSONObject(i);
+                        String categoryName = categoryObject.getString("category_name");
+                        categories.add(categoryName);
                     }
 
                     // Populate the Spinner
@@ -149,9 +154,11 @@ public class SearchResultFragment extends Fragment {
                     );
                     spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     categorySpinner.setAdapter(spinnerAdapter);
+                    } else {
+                        Log.e("SearchResultActivity", "API returned success=false");
+                    }
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                    Log.e("CATEGORY_ERROR", "Error parsing categories: " + e.getMessage());
+                    Log.e("SearchResultActivity", "JSON Parsing Error: ", e);
                 }
             }
 
@@ -173,40 +180,56 @@ public class SearchResultFragment extends Fragment {
     private void fetchSearchResults(String searchQuery, String category, int hourlyRate) {
         String endpoint = "search?query=" + searchQuery + "&category=" + category + "&hourlyRate=" + hourlyRate;
 
-        ApiRequest.getInstance().makeGetArrayRequest(requireContext(), endpoint, new ApiRequest.ResponseListener<JSONArray>() {
-            @Override
-            public void onSuccess(JSONArray response) {
-                try {
-                    searchResultList.clear(); // Clear previous results
-                    for (int i = 0; i < response.length(); i++) {
-                        JSONObject jsonObject = response.getJSONObject(i);
+        ApiRequest.getInstance().makeGetObjectRequest(
+                getContext(),
+                endpoint,
+                new ApiRequest.ResponseListener<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject response) {
+                        try {
+                            // Check if the API response is successful
+                            if (response != null && response.getString("status").equals("success")) {
+                                JSONArray taskersArray = response.getJSONArray("data"); // Extract the "data" array
 
-                        String name = jsonObject.optString("name", "N/A"); // Use "N/A" as default if the field is missing
-                        String skill = jsonObject.optString("skill", "N/A");
-                        double hourlyRate = jsonObject.optDouble("hourly_rate", 0.0); // Use 0.0 as default if the field is missing
-                        String profilePicture = jsonObject.optString("profile_picture", ""); // Use empty string as default
-                        double rating = jsonObject.optDouble("rating", 0.0);
-                        String description = jsonObject.optString("description", "No description available.");
-                        boolean availabilityStatus = jsonObject.optBoolean("availability_status", false); // Tasker's availability status
+                                List<SearchResult> newSearchResults = new ArrayList<>();
+                                for (int i = 0; i < taskersArray.length(); i++) {
+                                    JSONObject taskerObject = taskersArray.getJSONObject(i);
 
-                        // Format waiting jobs text based on availability status
-                        String waitingJobs = availabilityStatus ? "Available" : "Not Available";
+                                    String name = taskerObject.optString("name", "N/A");
+                                    String skill = taskerObject.optString("skill", "N/A");
+                                    double hourlyRate = taskerObject.optDouble("hourly_rate", 0.0);
+                                    String profilePicture = taskerObject.optString("profile_picture", "");
+                                    double rating = taskerObject.optDouble("rating", 0.0);
+                                    String description = taskerObject.optString("description", "No description available.");
+                                    boolean availabilityStatus = taskerObject.optBoolean("availability_status", false);
 
+                                    // Format waiting jobs text based on availability status
+                                    String waitingJobs = availabilityStatus ? "Available" : "Not Available";
 
-                        searchResultList.add(new SearchResult(name, skill, hourlyRate, profilePicture, rating, description, waitingJobs));
+                                    // Add to the list
+                                    newSearchResults.add(new SearchResult(name, skill, hourlyRate, profilePicture, rating, description, waitingJobs));
+                                }
+
+                                // Update the adapter with new data
+                                searchResultAdapter = new SearchResultAdapter(newSearchResults);
+                                searchResultsRecyclerView.setAdapter(searchResultAdapter);
+                            } else {
+                                Log.e("SearchFragment", "API returned success=false");
+                            }
+                        } catch (JSONException e) {
+                            Log.e("SearchFragment", "JSON Parsing Error: ", e);
+                        }
                     }
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onFailure(String error) {
-                Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure(String error) {
+                        // Handle API error
+                        Log.e("SearchFragment", "Error fetching search results: " + error);
+                    }
+                }
+        );
     }
+
 
     @Override
     public boolean onSupportNavigateUp() {
