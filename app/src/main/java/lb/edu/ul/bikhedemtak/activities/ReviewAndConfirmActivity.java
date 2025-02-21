@@ -125,7 +125,7 @@ public class ReviewAndConfirmActivity extends AppCompatActivity {
             newTask.put("requester_id", SharedPrefsManager.getUserId(this));
             newTask.put("tasker_id", getIntent().getIntExtra("tasker_id", -1));
             newTask.put("task_description", getIntent().getStringExtra("user_input"));
-            newTask.put("category_id", getIntent().getIntExtra("category_id", 1));
+            newTask.put("category_id", 72);
             newTask.put("booking_date", getIntent().getStringExtra("booking_date") + " " + getIntent().getStringExtra("booking_time"));
 
             // Log the request for debugging
@@ -138,7 +138,7 @@ public class ReviewAndConfirmActivity extends AppCompatActivity {
             return;
         }
 
-        String postTaskEndpoint = "postTask.php"; // or whatever the correct endpoint is
+        String postTaskEndpoint = "postTask.php";
 
         ApiRequest.getInstance().makePostRequest(this, postTaskEndpoint, newTask, new ApiRequest.ResponseListener<JSONObject>() {
             @Override

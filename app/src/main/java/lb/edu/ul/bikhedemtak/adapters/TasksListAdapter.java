@@ -1,6 +1,7 @@
 package lb.edu.ul.bikhedemtak.adapters;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,33 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.Task
 
             intent.putExtra("task_id", task_id);
             v.getContext().startActivity(intent);
+        });
+
+        holder.taskerImg.setOnClickListener(v-> {
+            int task_id = taskList.get(position).getId();
+            String endpoint = "getTaskerIdByTaskId.php?task_id=" + task_id;
+            ApiRequest.getInstance().makeGetObjectRequest(v.getContext(), endpoint, new ApiRequest.ResponseListener<JSONObject>() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    try {
+                        if (response.getString("status").equals("success")) {
+                            JSONObject tasker = response.getJSONObject("data");
+                            int tasker_id = tasker.getInt("tasker_id");
+                            Log.d("Tasker ID", String.valueOf(tasker_id));
+                            Intent intent = new Intent(v.getContext(), TaskerProfileActivity.class);
+                            intent.putExtra("tasker_id", tasker_id);
+                            v.getContext().startActivity(intent);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(String error) {
+
+                }
+            });
         });
     }
 
