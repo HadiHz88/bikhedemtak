@@ -135,7 +135,6 @@ public class TaskerProfileActivity extends AppCompatActivity {
                 try {
                     JSONObject data = response.getJSONObject("data");
 
-                    allReviews = new ArrayList<>();
                     String name = data.getString("name");
                     String profilePicture = data.optString("profile_picture", "");
                     String skill = data.getString("skill");
@@ -257,7 +256,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
      */
     private void openDateTimePicker() {
         Bundle bundle = new Bundle();
-        bundle.putInt("tasker_id", 1); // Temporary tasker ID
+        bundle.putInt("tasker_id", tasker_id); // Temporary tasker ID
 
         DateTimeBottomSheet bottomSheet = new DateTimeBottomSheet();
         bottomSheet.setArguments(bundle);

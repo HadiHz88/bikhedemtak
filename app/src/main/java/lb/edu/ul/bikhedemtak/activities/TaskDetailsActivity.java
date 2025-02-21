@@ -24,6 +24,8 @@ public class TaskDetailsActivity extends AppCompatActivity {
     private ActivityTaskDetailsBinding binding;
     private String userInput = "";
 
+    private int taskerId;
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
@@ -55,7 +57,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         // Retrieve intent data
         Intent intent = getIntent();
         if (intent != null) {
-            int taskerId = intent.getIntExtra("tasker_id", -1);
+            taskerId = intent.getIntExtra("tasker_id", -1);
             String bookingTime = intent.getStringExtra("booking_time");
 
             String[] parts = bookingTime != null ? bookingTime.split(" ") : null;
@@ -142,6 +144,7 @@ public class TaskDetailsActivity extends AppCompatActivity {
         intent.putExtra("booking_date", bookingDate);
         intent.putExtra("booking_time", bookingTimeOnly);
         intent.putExtra("user_input", userInput);
+        intent.putExtra("tasker_id", taskerId);
         startActivity(intent);
     }
 }
