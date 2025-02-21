@@ -229,7 +229,7 @@ public class SearchResultFragment extends Fragment {
                                     // Format waiting jobs text based on availability status
                                     String waitingJobs = availabilityStatus ? "Available" : "Not Available";
 
-                                    int taskerId = taskerObject.optInt("tasker_id", -1); // Tasker's ID
+                                    int taskerId = taskerObject.optInt("user_id", -1); // Tasker's ID
 
                                     // Add to the list
                                     newSearchResults.add(new SearchResult(name, skill, hourlyRate, profilePicture, rating, description, waitingJobs,taskerId));

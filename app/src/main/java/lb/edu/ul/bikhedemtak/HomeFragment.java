@@ -273,7 +273,7 @@ public class HomeFragment extends Fragment {
                                     // Format waiting jobs text based on availability status
                                     String waitingJobs = availabilityStatus ? "Available" : "Not Available";
 
-                                    int taskerId = profileObject.optInt("tasker_id", -1); // Tasker's ID
+                                    int taskerId = profileObject.optInt("user_id", -1); // Tasker's ID
                                     // Add to the list
                                     newItems.add(new SecondSquareItem(profilePictureUrl, name, rating, hourlyRate, waitingJobs, taskerId));
                                 }
