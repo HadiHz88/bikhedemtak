@@ -3,6 +3,7 @@ package lb.edu.ul.bikhedemtak.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.Locale;
 
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.activities.TaskDetailsActivity;
+import lb.edu.ul.bikhedemtak.activities.TaskerProfileActivity;
 
 /**
  * A BottomSheetDialogFragment that allows users to select a date and time.
@@ -66,13 +68,14 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
             // Retrieve the tasker_id from the arguments
             int taskerId = getArguments() != null ? getArguments().getInt("tasker_id", -1) : -1;
 
-//            Log.d("DateTimeBottomSheet", "selected date: " + date + " " + time);
+            Log.d("DateTimeBottomSheet", "selected date: " + date + " " + time);
+            Log.d("DateTimeBottomSheet", "tasker_id: " + taskerId);
 
             // Create the intent to pass data back to TaskDetailsActivity
             Intent i = new Intent(getContext(), TaskDetailsActivity.class);
             i.putExtra("tasker_id", taskerId); // Pass tasker_id as an integer
             i.putExtra("booking_time", date + " " + time); // Pass the combined date and time
-            startActivity(i); // Start MainActivity with the passed data
+            startActivity(i); // Start TaskDetailsActivity with the passed data
         });
 
         return view;
@@ -92,14 +95,9 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
             Calendar selected = Calendar.getInstance();
             selected.setTimeInMillis(selection);
 
-            if (DateUtils.isToday(selected.getTimeInMillis())) {
-                selectedDate.setText("Today");
-            } else if (DateUtils.isToday(selected.getTimeInMillis() - DateUtils.DAY_IN_MILLIS)) {
-                selectedDate.setText("Tomorrow");
-            } else {
-                selectedDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-                        .format(selected.getTime()));
-            }
+            selectedDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+                    .format(selected.getTime()));
+
         });
 
         datePicker.show(getParentFragmentManager(), "DATE_PICKER");
@@ -120,7 +118,7 @@ public class DateTimeBottomSheet extends BottomSheetDialogFragment {
             Calendar selected = Calendar.getInstance();
             selected.set(Calendar.HOUR_OF_DAY, timePicker.getHour());
             selected.set(Calendar.MINUTE, timePicker.getMinute());
-            selectedTime.setText(new SimpleDateFormat(" HH:mm:ss", Locale.getDefault())
+            selectedTime.setText(new SimpleDateFormat("HH:mm:ss", Locale.getDefault())
                     .format(selected.getTime()));
         });
 
