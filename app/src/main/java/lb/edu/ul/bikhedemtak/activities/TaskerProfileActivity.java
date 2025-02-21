@@ -1,8 +1,10 @@
 package lb.edu.ul.bikhedemtak.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -55,6 +57,8 @@ public class TaskerProfileActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
+    private String phoneNumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
             Log.d("TaskerProfileActivity", "Intent is null");
             return;
         }
-        tasker_id = intent.getIntExtra("tasker_id", 2);
+        tasker_id = intent.getIntExtra("tasker_id", 0);
 
         initializeViews();
         setupToolbar();
@@ -75,13 +79,13 @@ public class TaskerProfileActivity extends AppCompatActivity {
 
         // Set up button click listeners
         selectTasker.setOnClickListener(v -> openDateTimePicker());
-        viewAllReviews.setOnClickListener(v -> openViewAllReviewsActivity());
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             fetchTaskerDetails();
             setupRecyclerView();
             swipeRefreshLayout.setRefreshing(false);
         });
+        viewAllReviews.setOnClickListener(v -> openViewAllReviewsActivity());
     }
 
     /**
@@ -114,6 +118,8 @@ public class TaskerProfileActivity extends AppCompatActivity {
         }
         // Enable the Up button
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+
+
     }
 
     /**
@@ -138,6 +144,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
                     String description = data.getString("description");
                     String hourlyRate = String.valueOf(data.getInt("hourly_rate"));
                     String projectsCount = data.optString("completed_tasks_count", "0");
+                    phoneNumber = data.optString("phone_number", "1234567890");
 
                     updateTaskerDetails(name, profilePicture, skill, availabilityStatus, rating, description, hourlyRate, projectsCount);
                 } catch (Exception e) {
@@ -179,7 +186,7 @@ public class TaskerProfileActivity extends AppCompatActivity {
         reviewAdapter = new ReviewAdapter(new ArrayList<>());
         reviewsRecyclerView.setAdapter(reviewAdapter);
 
-        String reviewsEndpoint = "getTaskerReviews.php?tasker_id=" + tasker_id; // Temporary tasker ID
+        String reviewsEndpoint = "getLatestReviews.php?tasker_id=" + tasker_id; // Temporary tasker ID
 
         ApiRequest.getInstance().makeGetObjectRequest(this, reviewsEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override
@@ -200,14 +207,19 @@ public class TaskerProfileActivity extends AppCompatActivity {
                             allReviews.add(new Review(reviewerName, reviewContent, reviewDate, rating, profilePicture));
                         }
 
-                        // Limit the reviews to 4
-                        List<Review> limitedReviews = allReviews.size() > 4 ? allReviews.subList(0, 4) : allReviews;
+                        if (allReviews.size() > 0) {
+                            reviewAdapter.updateReviews(allReviews);
+                            reviewsRecyclerView.setVisibility(View.VISIBLE);
+                            findViewById(R.id.noReviewsCard).setVisibility(View.GONE);
+                        }else{
+                            findViewById(R.id.noReviewsCard).setVisibility(View.VISIBLE);
+                            reviewsRecyclerView.setVisibility(View.GONE);
+                        }
 
-                        // Update the adapter with limited reviews
-                        reviewAdapter.updateReviews(limitedReviews);
                     } else {
                         Log.d("TaskerProfileActivity", "No reviews found");
-                        // Optionally handle empty reviews (e.g., show a message)
+                        findViewById(R.id.noReviewsCard).setVisibility(View.VISIBLE);
+                        reviewsRecyclerView.setVisibility(View.GONE);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -257,9 +269,15 @@ public class TaskerProfileActivity extends AppCompatActivity {
      * Open the "View All Reviews" activity.
      */
     private void openViewAllReviewsActivity() {
-        Intent intent = new Intent(TaskerProfileActivity.this, ViewAllReviewsActivity.class);
-        intent.putExtra("reviews_list", (ArrayList<Review>) allReviews);
-        startActivity(intent);
+        Intent viewAllIntent = new Intent(TaskerProfileActivity.this, ViewAllReviewsActivity.class);
+        viewAllIntent.putExtra("tasker_id", tasker_id);
+        startActivity(viewAllIntent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tasker_profile_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -267,6 +285,16 @@ public class TaskerProfileActivity extends AppCompatActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
+
+        if (item.getItemId() == R.id.action_call) {
+            // Implement call functionality
+            String phoneNumber = "1234567890"; // Temporary phone number
+            Intent dialIntent = new Intent(Intent.ACTION_DIAL, null);
+            dialIntent.setData(Objects.requireNonNull(Uri.parse("tel:" + phoneNumber)));
+            startActivity(dialIntent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }

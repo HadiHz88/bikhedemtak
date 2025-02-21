@@ -1,6 +1,8 @@
 package lb.edu.ul.bikhedemtak.activities;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,11 +11,15 @@ import com.google.android.material.appbar.MaterialToolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.ReviewAdapter;
+import lb.edu.ul.bikhedemtak.api.ApiRequest;
 import lb.edu.ul.bikhedemtak.models.Review;
 
 /**
@@ -26,7 +32,9 @@ public class ViewAllReviewsActivity extends AppCompatActivity {
     // Adapter for the RecyclerView
     ReviewAdapter reviewAdapter;
 
-    List<Review> reviews;
+    List<Review> reviews = new ArrayList<>();
+    int tasker_id;
+
 
     /**
      * Called when the activity is first created.
@@ -37,6 +45,8 @@ public class ViewAllReviewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all_reviews);
+
+        tasker_id = getIntent().getIntExtra("tasker_id", 2);
 
         // Set up the Toolbar
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
@@ -51,13 +61,59 @@ public class ViewAllReviewsActivity extends AppCompatActivity {
         allReviewsRecyclerView = findViewById(R.id.allReviewsRecyclerView);
         allReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        reviews = (ArrayList<Review>) getIntent().getSerializableExtra("reviews_list");
-        if (reviews == null) {
-            reviews = new ArrayList<>(); // Fallback if no data
-        }
+        String reviewsEndpoint = "getTaskerReviews.php?tasker_id=" + tasker_id; // Temporary tasker ID
 
-        reviewAdapter = new ReviewAdapter(reviews);
+        // Initialize the adapter with an empty list and set it to the RecyclerView
+        reviewAdapter = new ReviewAdapter(new ArrayList<>());
         allReviewsRecyclerView.setAdapter(reviewAdapter);
+
+        ApiRequest.getInstance().makeGetObjectRequest(this, reviewsEndpoint, new ApiRequest.ResponseListener<JSONObject>() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                try {
+                    if (response.getBoolean("success")) {
+                        JSONArray reviewsArray = response.getJSONArray("reviews");
+                        reviews.clear(); // Clear any old data before adding new data
+
+                        for (int i = 0; i < reviewsArray.length(); i++) {
+                            JSONObject reviewObject = reviewsArray.getJSONObject(i);
+                            String reviewerName = reviewObject.getString("reviewer_name");
+                            String reviewContent = reviewObject.getString("review_content");
+                            String reviewDate = reviewObject.getString("created_at");
+                            float rating = (float) reviewObject.getDouble("rating");
+                            String profilePicture = reviewObject.optString("reviewer_profile_picture", "");
+
+                            reviews.add(new Review(reviewerName, reviewContent, reviewDate, rating, profilePicture));
+                        }
+
+                        if (reviews.size() > 0) {
+                            // Update reviews and show RecyclerView
+                            reviewAdapter.updateReviews(reviews);
+                            allReviewsRecyclerView.setVisibility(View.VISIBLE);
+                            findViewById(R.id.noReviewsCard).setVisibility(View.GONE);
+                        } else {
+                            // Show the no reviews card
+                            findViewById(R.id.noReviewsCard).setVisibility(View.VISIBLE);
+                            allReviewsRecyclerView.setVisibility(View.GONE);
+                        }
+                    } else {
+                        Log.d("TaskerProfileActivity", "No reviews found");
+                        findViewById(R.id.noReviewsCard).setVisibility(View.VISIBLE);
+                        allReviewsRecyclerView.setVisibility(View.GONE);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.d("TaskerProfileActivity", "Error: " + error);
+                findViewById(R.id.noReviewsCard).setVisibility(View.VISIBLE);
+                allReviewsRecyclerView.setVisibility(View.GONE);
+            }
+        });
+
     }
 
 }
