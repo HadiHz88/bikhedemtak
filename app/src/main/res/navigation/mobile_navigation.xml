@@ -27,9 +27,9 @@
         tools:layout="@layout/fragment_my_tasker" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="lb.edu.ul.bikhedemtak.ProfileFragment"
+        android:name="lb.edu.ul.bikhedemtak.fragments.UserProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_user_profile" />
 
 
     <fragment

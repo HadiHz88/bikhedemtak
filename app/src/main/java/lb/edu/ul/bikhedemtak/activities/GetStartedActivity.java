@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.GetStartedSlideAdapter;
+import lb.edu.ul.bikhedemtak.homepageActivity;
 import lb.edu.ul.bikhedemtak.models.GetStartedSlide;
 
 /**
@@ -137,7 +138,7 @@ public class GetStartedActivity extends AppCompatActivity {
 
         // Skip button - launches guest flow
         findViewById(R.id.btnSkip).setOnClickListener(v -> {
-            Intent skipping = new Intent(this, TaskerProfileActivity.class);
+            Intent skipping = new Intent(this, homepageActivity.class);
             startActivity(skipping);
         });
     }

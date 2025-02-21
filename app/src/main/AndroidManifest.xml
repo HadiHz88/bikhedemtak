@@ -26,10 +26,6 @@
             android:name=".activities.ReviewAndConfirmActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.BookingTaskActivity"
-            android:exported="true"
-            android:theme="@style/Theme.Bikhedemtak" />
-        <activity
             android:name=".activities.LauncherActivity"
             android:exported="true">
             <intent-filter>

@@ -17,8 +17,11 @@ import androidx.core.view.MenuProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
+
 import com.google.android.material.appbar.MaterialToolbar;
+
 import lb.edu.ul.bikhedemtak.R;
+import lb.edu.ul.bikhedemtak.homepageActivity;
 
 /**
  * Authentication Activity that handles user login and registration screens.
@@ -62,7 +65,8 @@ public class AuthActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemSelected(@NonNull MenuItem menuItem) {
                 if (menuItem.getItemId() == R.id.action_skip) {
-                    Toast.makeText(AuthActivity.this, "Skip clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(AuthActivity.this, homepageActivity.class);
+                    startActivity(intent);
                     return true;
                 }
                 return false;
@@ -92,11 +96,6 @@ public class AuthActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void handleSkipAction() {
-        Intent skipping = new Intent(AuthActivity.this, TaskerProfileActivity.class);
-        startActivity(skipping);
     }
 
     /**
@@ -131,6 +130,7 @@ public class AuthActivity extends AppCompatActivity {
 
     /**
      * Provides access to the toolbar for other components
+     *
      * @return The activity's MaterialToolbar instance
      */
     public MaterialToolbar getToolBar() {
@@ -139,6 +139,7 @@ public class AuthActivity extends AppCompatActivity {
 
     /**
      * Handles the Up button press in the ActionBar
+     *
      * @return true if navigation was handled successfully
      */
     @Override
@@ -149,4 +150,5 @@ public class AuthActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         return navController.navigateUp() || super.onSupportNavigateUp();
     }
+
 }

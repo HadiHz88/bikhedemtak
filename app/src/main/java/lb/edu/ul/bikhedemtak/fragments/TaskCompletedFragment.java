@@ -21,6 +21,7 @@ import lb.edu.ul.bikhedemtak.R;
 import lb.edu.ul.bikhedemtak.adapters.TasksListAdapter;
 import lb.edu.ul.bikhedemtak.api.ApiRequest;
 import lb.edu.ul.bikhedemtak.models.Task;
+import lb.edu.ul.bikhedemtak.utils.SharedPrefsManager;
 
 public class TaskCompletedFragment extends Fragment {
     private RecyclerView completedRecView;
@@ -41,7 +42,9 @@ public class TaskCompletedFragment extends Fragment {
 
         completedRecView = view.findViewById(R.id.taskCompletedRecView);
 
-        String endpoint = "getCompletedTasks.php?user_id=" + 2;
+        int userId = SharedPrefsManager.getUserId(getContext());
+
+        String endpoint = "getCompletedTasks.php?requester_id=" + userId;
 
         ApiRequest.getInstance().makeGetObjectRequest(getContext(), endpoint, new ApiRequest.ResponseListener<JSONObject>() {
             @Override
@@ -66,6 +69,11 @@ public class TaskCompletedFragment extends Fragment {
 
                         completedAdapter = new TasksListAdapter(allCompletedTasks);
                         completedRecView.setAdapter(completedAdapter);
+
+                        if (allCompletedTasks.isEmpty()) {
+                            view.findViewById(R.id.noTask).setVisibility(View.VISIBLE);
+                            view.findViewById(R.id.taskCompletedRecView).setVisibility(View.GONE);
+                        }
                     }
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
